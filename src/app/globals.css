@@ -134,47 +134,6 @@ body {
   margin-top: 1rem;
 }
 
-/* Hero decorative motion – ambient accents only */
-@keyframes float-soft {
-  0%,
-  100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-6px);
-  }
-}
-
-@keyframes float-soft-alt {
-  0%,
-  100% {
-    transform: translate3d(0, 0, 0);
-  }
-  50% {
-    transform: translate3d(3px, -5px, 0);
-  }
-}
-
-.hero-float {
-  animation: float-soft 10s ease-in-out infinite;
-  transform-box: fill-box;
-  transform-origin: center;
-}
-
-.hero-float-delayed {
-  animation: float-soft-alt 14s ease-in-out infinite;
-  animation-delay: 1.5s;
-  transform-box: fill-box;
-  transform-origin: center;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .hero-float,
-  .hero-float-delayed {
-    animation: none;
-  }
-}
-
 /* Reveal on scroll */
 .reveal {
   opacity: 0;
