@@ -76,13 +76,13 @@ export function HeroSection() {
           <div className="absolute bottom-10 left-[18%] h-40 w-52 rounded-full bg-cream-deep/60 blur-2xl" />
         </div>
 
-        <div className="relative flex items-center py-12 pl-[max(3rem,calc((100vw-1040px)/2))] pr-8 xl:pr-10">
-          <div className="w-full max-w-[36rem]">
+        <div className="relative flex items-center justify-center px-8 py-12 lg:px-10 xl:px-12 2xl:px-16">
+          <div className="w-full max-w-[37rem]">
             <HeroCopy />
           </div>
         </div>
 
-        <div className="relative flex min-h-[520px] max-h-[560px] flex-col pt-3 xl:pt-4">
+        <div className="relative flex min-h-[520px] max-h-[560px] flex-col pt-1.5 xl:pt-2">
           <div className="relative min-h-0 flex-1 overflow-hidden rounded-l-2xl shadow-[0_10px_28px_rgba(22,58,66,0.07)]">
             <Image
               src="/images/hero-care-scene.png"
