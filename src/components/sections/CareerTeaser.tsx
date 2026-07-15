@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/Button";
 import { Section, SectionHeader } from "@/components/ui/Section";
 import { Reveal } from "@/components/ui/Reveal";
-import { careersNote, cta, employerPromises } from "@/content/site-content";
+import { cta, employerPromises } from "@/content/site-content";
 
 export function CareerTeaser() {
   return (
@@ -9,9 +9,9 @@ export function CareerTeaser() {
       <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
         <SectionHeader
           light
-          eyebrow="Arbeitgeberkommunikation (Demo)"
+          eyebrow="Karriere"
           title="Gute Pflege braucht gute Bedingungen."
-          description={careersNote}
+          description="Verlässliche Absprachen, klare Einarbeitung und erreichbare Leitung – was uns unter guter Teamarbeit wichtig ist."
         />
         <Button
           href={cta.career.href}

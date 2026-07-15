@@ -1,8 +1,7 @@
 import { ContactForm } from "@/components/forms/ContactForm";
-import { DemoBadge } from "@/components/ui/DemoBadge";
 import { Button } from "@/components/ui/Button";
 import { Section, SectionHeader } from "@/components/ui/Section";
-import { contact, siteConfig } from "@/content/site-content";
+import { contact } from "@/content/site-content";
 import { createPageMetadata } from "@/lib/metadata";
 import { Clock3, Mail, MapPin, Phone } from "lucide-react";
 
@@ -13,13 +12,12 @@ export default function KontaktPage() {
     <>
       <section className="border-b border-line bg-surface">
         <div className="container-site section-space">
-          <DemoBadge />
-          <h1 className="mt-5 font-display text-4xl tracking-tight text-petrol md:text-5xl">
+          <h1 className="font-display text-4xl tracking-tight text-petrol md:text-5xl">
             Kontakt aufnehmen
           </h1>
           <p className="mt-5 max-w-2xl text-lg leading-relaxed text-ink-muted">
-            Für ein unverbindliches Erstgespräch oder allgemeine Fragen. Alle
-            Angaben auf dieser Seite sind Demo-Daten – kein realer Pflegedienst.
+            Für ein unverbindliches Erstgespräch oder allgemeine Fragen –
+            telefonisch, per E-Mail oder über das Formular.
           </p>
         </div>
       </section>
@@ -113,8 +111,8 @@ export default function KontaktPage() {
               Erfurt · Musterstraße 12
             </p>
             <p className="mt-2 text-sm text-ink-muted">
-              {siteConfig.demoNotice}. Hier würde in einer Live-Website eine
-              lokale Karte oder eine Adressskizze stehen.
+              Hier würde in einer Live-Website eine lokale Karte oder eine
+              Adressskizze stehen.
             </p>
           </div>
         </div>

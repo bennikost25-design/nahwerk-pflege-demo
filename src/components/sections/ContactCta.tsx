@@ -10,7 +10,7 @@ export function ContactCta() {
         <SectionHeader
           eyebrow="Nächster Schritt"
           title="Unverbindlich ins Gespräch kommen"
-          description="Telefon, E-Mail oder Formular – wählen Sie den Weg, der zu Ihnen passt. Alle Angaben sind Demo-Daten."
+          description="Telefon, E-Mail oder Formular – wählen Sie den Weg, der zu Ihnen passt."
         />
 
         <div className="space-y-5 border border-line bg-cream p-6 md:p-7">
@@ -60,7 +60,6 @@ export function ContactCta() {
               {cta.secondary.shortLabel}
             </Button>
           </div>
-          <p className="text-sm text-ink-muted">{contact.note}</p>
         </div>
       </div>
     </Section>

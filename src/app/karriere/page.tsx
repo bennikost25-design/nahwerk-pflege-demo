@@ -1,7 +1,6 @@
 import { ApplicationForm } from "@/components/forms/ApplicationForm";
 import { FaqSection } from "@/components/sections/FaqSection";
 import { Button } from "@/components/ui/Button";
-import { DemoBadge } from "@/components/ui/DemoBadge";
 import { Reveal } from "@/components/ui/Reveal";
 import { Section, SectionHeader } from "@/components/ui/Section";
 import {
@@ -10,7 +9,6 @@ import {
   employerPromises,
   faqCareer,
   jobs,
-  siteConfig,
   workdayHighlights,
 } from "@/content/site-content";
 import { createPageMetadata } from "@/lib/metadata";
@@ -22,8 +20,7 @@ export default function KarrierePage() {
     <>
       <section className="border-b border-line bg-[linear-gradient(160deg,var(--color-petrol)_0%,var(--color-petrol-deep)_100%)] text-white">
         <div className="container-site section-space">
-          <DemoBadge className="bg-white/95" />
-          <h1 className="mt-6 max-w-3xl font-display text-4xl leading-tight tracking-tight md:text-5xl">
+          <h1 className="max-w-3xl font-display text-4xl leading-tight tracking-tight md:text-5xl">
             Pflege soll nicht nur für andere funktionieren.
           </h1>
           <p className="mt-5 max-w-2xl text-lg leading-relaxed text-white/85">
@@ -39,9 +36,8 @@ export default function KarrierePage() {
 
       <Section>
         <SectionHeader
-          eyebrow="Beispielhafte Kommunikation"
           title="Arbeitgeberversprechen"
-          description={careersNote}
+          description="Was uns als Team wichtig ist – Orientierung für Interessierte."
         />
         <div className="mt-10 grid gap-6 sm:grid-cols-2">
           {employerPromises.map((item, index) => (
@@ -59,19 +55,14 @@ export default function KarrierePage() {
 
       <Section tone="surface" id="stellen">
         <SectionHeader
-          title="Beispielstellen"
-          description="Alle Stellen sind fiktive Demostellen – ohne reale Ausschreibung und ohne Verpflichtung."
+          title="Offene Stellen"
+          description="Alle Stellen sind Demostellen – ohne reale Ausschreibung und ohne Verpflichtung."
         />
         <div className="mt-10 space-y-6">
           {jobs.map((job, index) => (
             <Reveal key={job.id} delayMs={index * 50}>
               <article className="border border-line bg-cream p-5 md:p-7">
-                <div className="flex flex-wrap items-center gap-3">
-                  <h3 className="font-display text-2xl text-petrol">{job.title}</h3>
-                  <span className="rounded-[var(--radius-sm)] border border-terracotta/30 bg-terracotta-soft px-2.5 py-1 text-xs font-semibold text-ink">
-                    {job.demoLabel}
-                  </span>
-                </div>
+                <h3 className="font-display text-2xl text-petrol">{job.title}</h3>
                 <p className="mt-4 max-w-3xl text-ink-muted leading-relaxed">
                   {job.description}
                 </p>
@@ -108,8 +99,8 @@ export default function KarrierePage() {
 
       <Section tone="sage">
         <SectionHeader
-          title="Arbeitsalltag (Beispiel)"
-          description="Ein stilisierter Eindruck – keine Beschreibung eines realen Betriebes."
+          title="Arbeitsalltag"
+          description="Ein stilisierter Eindruck vom Tagesablauf im Team."
         />
         <div className="mt-10 grid gap-5 md:grid-cols-3">
           {workdayHighlights.map((item) => (
@@ -144,9 +135,8 @@ export default function KarrierePage() {
           <div>
             <SectionHeader
               title="Kurzbewerbung"
-              description="Wenige Angaben, kein Lebenslauf-Upload. Ideal für den ersten Kontakt – in dieser Demo rein lokal und ohne Übertragung."
+              description="Wenige Angaben, kein Lebenslauf-Upload – ideal für den ersten Kontakt. Das Formular überträgt keine Daten."
             />
-            <p className="mt-4 text-sm text-ink-muted">{siteConfig.demoNotice}</p>
           </div>
           <ApplicationForm />
         </div>
@@ -155,7 +145,7 @@ export default function KarrierePage() {
       <FaqSection
         items={faqCareer}
         title="Fragen für Bewerberinnen und Bewerber"
-        description="Transparente Antworten zur Demo-Bewerbung."
+        description="Klar und kurz beantwortet."
       />
     </>
   );

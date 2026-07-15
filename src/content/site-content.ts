@@ -10,8 +10,8 @@ export const siteConfig = {
   demoNotice: "Demo-Projekt – fiktiver Pflegedienst",
   demoDisclaimer:
     "Alle Angaben auf dieser Website sind fiktiv und dienen ausschließlich Demonstrationszwecken.",
-  /** Kanonische Demo-URL – bei Deployment austauschen */
-  url: "https://nahwerk-pflege-demo.example",
+  /** Kanonische Demo-URL */
+  url: "https://nahwerk-pflege-demo.vercel.app",
   locale: "de_DE",
   language: "de",
 } as const;
@@ -191,18 +191,17 @@ export const employerPromises = [
   {
     title: "Bezahlte Fortbildungen",
     description:
-      "Zeit und Raum für Lernen im Arbeitsalltag, als beispielhafte Arbeitgeberkommunikation.",
+      "Zeit und Raum für Lernen im Arbeitsalltag – damit Weiterentwicklung planbar bleibt.",
   },
 ] as const;
 
 export const careersNote =
-  "Beispielhafte Arbeitgeberkommunikation einer Demo – keine geprüften realen Arbeitsbedingungen." as const;
+  "Orientierung für Bewerberinnen und Bewerber – keine geprüften realen Arbeitsbedingungen." as const;
 
 export const jobs = [
   {
     id: "pflegefachkraft",
     title: "Pflegefachkraft",
-    demoLabel: "Fiktive Demostelle",
     description:
       "Sie begleiten Menschen zu Hause, stimmen Versorgung ab und sind fester Ansprechpartner im Team.",
     workModels: ["Teilzeit", "Vollzeit", "flexible Tagdienste"],
@@ -216,7 +215,6 @@ export const jobs = [
   {
     id: "pflegehilfskraft",
     title: "Pflegehilfskraft",
-    demoLabel: "Fiktive Demostelle",
     description:
       "Sie unterstützen bei der Grundpflege und im Alltag – mit klarer Einarbeitung und erreichbaren Kolleginnen und Kollegen.",
     workModels: ["Teilzeit", "Minijob möglich", "Vormittagsdienste"],
@@ -230,7 +228,6 @@ export const jobs = [
   {
     id: "hauswirtschaft",
     title: "Mitarbeiter im Bereich Hauswirtschaft",
-    demoLabel: "Fiktive Demostelle",
     description:
       "Sie entlasten Haushalte bei praktischen Aufgaben und arbeiten eng mit dem Pflegeteam zusammen.",
     workModels: ["Teilzeit", "stundenweise Einsätze", "Vormittag/Nachmittag"],

@@ -25,7 +25,6 @@ export function HeroSection() {
               {cta.secondary.label}
             </Button>
           </div>
-          <p className="mt-6 text-sm text-ink-muted">{siteConfig.demoNotice}</p>
         </div>
         <HeroVisual />
       </div>

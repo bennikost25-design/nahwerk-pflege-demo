@@ -1,10 +1,9 @@
 import { ContactCta } from "@/components/sections/ContactCta";
 import { FaqSection } from "@/components/sections/FaqSection";
-import { DemoBadge } from "@/components/ui/DemoBadge";
 import { Section, SectionHeader } from "@/components/ui/Section";
 import { Reveal } from "@/components/ui/Reveal";
 import { Button } from "@/components/ui/Button";
-import { faqServices, services, siteConfig } from "@/content/site-content";
+import { faqServices, services } from "@/content/site-content";
 import { createPageMetadata } from "@/lib/metadata";
 
 export const metadata = createPageMetadata("leistungen");
@@ -14,17 +13,15 @@ export default function LeistungenPage() {
     <>
       <section className="border-b border-line bg-surface">
         <div className="container-site section-space">
-          <DemoBadge />
-          <h1 className="mt-5 max-w-3xl font-display text-4xl tracking-tight text-petrol md:text-5xl">
+          <h1 className="max-w-3xl font-display text-4xl tracking-tight text-petrol md:text-5xl">
             Leistungen für den Alltag zu Hause
           </h1>
           <p className="mt-5 max-w-2xl text-lg leading-relaxed text-ink-muted">
             Die folgenden Bereiche zeigen, wie ein ambulanter Pflegedienst
             Unterstützung strukturieren kann. Der tatsächliche Leistungsumfang
             wird immer individuell geklärt – ohne rechtlich oder medizinisch
-            verbindliche Versprechen auf dieser Demo-Seite.
+            verbindliche Versprechen.
           </p>
-          <p className="mt-4 text-sm text-ink-muted">{siteConfig.demoDisclaimer}</p>
         </div>
       </section>
 
@@ -78,7 +75,6 @@ export default function LeistungenPage() {
           <div className="bg-cream/80 p-6">
             <p className="text-ink-muted leading-relaxed">
               Beratung ersetzt keine sozialrechtliche oder ärztliche Auskunft.
-              In dieser Demo dienen die Texte nur der Illustration.
             </p>
             <Button href="/kontakt" className="mt-5">
               Erstgespräch anfragen
