@@ -20,8 +20,15 @@ export default function HomePage() {
       <ProcessSection />
       <RelativesSection />
       <CareerTeaser />
-      <FaqSection items={faqHome} />
-      <ContactCta />
+      <FaqSection
+        items={faqHome}
+        layout="split"
+        eyebrow="Orientierung"
+        title="Häufige Fragen"
+        description="Kurze Antworten für Pflegebedürftige und Angehörige – in ruhiger Sprache."
+        tone="surface"
+      />
+      <ContactCta variant="closing" />
     </>
   );
 }

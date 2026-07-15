@@ -168,20 +168,40 @@ export const processSteps = [
 ] as const;
 
 export const relativesContent = {
+  eyebrow: "Für Angehörige",
+  statement:
+    "Gut informiert zu sein, nimmt nicht jede Sorge – aber viel Unsicherheit.",
   title: "Für Angehörige mitgedacht",
-  text: "Angehörige brauchen klare Ansprechpartner, nachvollziehbare Absprachen und verständliche Informationen. Wir nehmen uns Zeit für Fragen und halten wichtige Punkte so fest, dass alle Beteiligten den Überblick behalten – ohne medizinische Versprechen und ohne leere Zusicherungen.",
+  text: "Angehörige brauchen klare Ansprechpartner, nachvollziehbare Absprachen und verständliche Informationen. Wir nehmen uns Zeit für Fragen und halten wichtige Punkte so fest, dass alle Beteiligten den Überblick behalten.",
+  points: [
+    {
+      title: "Klare Ansprechpartner",
+      description:
+        "Sie wissen, wer erreichbar ist – bei Rückfragen zur Versorgung und im Alltag.",
+    },
+    {
+      title: "Nachvollziehbare Absprachen",
+      description:
+        "Termine, Zuständigkeiten und nächste Schritte werden verständlich festgehalten.",
+    },
+    {
+      title: "Verständliche Informationen",
+      description:
+        "Wir erklären, was möglich ist und was als Nächstes ansteht – in ruhiger Sprache.",
+    },
+  ],
 } as const;
 
 export const employerPromises = [
   {
     title: "Planbare Dienstzeiten",
     description:
-      "Dienstpläne mit Vorlauf und nachvollziehbaren Absprachen – als Beispiel für gute Arbeitsorganisation.",
+      "Dienstpläne mit Vorlauf und nachvollziehbaren Absprachen im Team.",
   },
   {
     title: "Strukturierte Einarbeitung",
     description:
-      "Einführung in Touren, Dokumentation und Teamabläufe, statt „einfach loslaufen“.",
+      "Einführung in Touren, Dokumentation und Teamabläufe – Schritt für Schritt.",
   },
   {
     title: "Erreichbare Leitung",
@@ -194,6 +214,46 @@ export const employerPromises = [
       "Zeit und Raum für Lernen im Arbeitsalltag – damit Weiterentwicklung planbar bleibt.",
   },
 ] as const;
+
+export const homeCopy = {
+  trust: {
+    eyebrow: "Darauf können Sie sich verlassen",
+    title: "Persönlich begleitet. Klar abgestimmt.",
+    description:
+      "Was uns im Alltag der ambulanten Pflege wichtig ist – für Sie und Ihre Angehörigen.",
+  },
+  services: {
+    eyebrow: "Leistungen",
+    title: "Unterstützung, die zum Alltag passt",
+    description:
+      "Unterstützung wird dann hilfreich, wenn sie zum persönlichen Alltag, zu Gewohnheiten und zum tatsächlichen Bedarf passt.",
+  },
+  process: {
+    title: "Von der ersten Frage bis zur passenden Unterstützung",
+    description:
+      "Drei nachvollziehbare Schritte – in Ruhe, verständlich und ohne Druck.",
+  },
+  career: {
+    eyebrow: "Arbeiten bei Nahwerk",
+    title: "Gute Pflege braucht gute Bedingungen.",
+    description:
+      "Verlässliche Absprachen, klare Einarbeitung und erreichbare Leitung – damit Teamarbeit im Alltag trägt.",
+    highlight: "Kurzbewerbung ohne Lebenslauf",
+  },
+  contact: {
+    eyebrow: "Nächster Schritt",
+    title: "Lassen Sie uns in Ruhe über Ihre Situation sprechen.",
+    description:
+      "Schildern Sie, worum es geht – wir hören zu und klären gemeinsam die nächsten Schritte.",
+    phoneNote: "Unverbindlich und ohne Verpflichtung.",
+  },
+  faq: {
+    eyebrow: "Orientierung",
+    title: "Häufige Fragen",
+    description:
+      "Kurze Antworten für Pflegebedürftige und Angehörige – in ruhiger Sprache.",
+  },
+} as const;
 
 export const careersNote =
   "Orientierung für Bewerberinnen und Bewerber – keine geprüften realen Arbeitsbedingungen." as const;

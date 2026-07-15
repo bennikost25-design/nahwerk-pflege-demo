@@ -1,73 +1,98 @@
 import { Button } from "@/components/ui/Button";
-import { Section, SectionHeader } from "@/components/ui/Section";
+import { Section } from "@/components/ui/Section";
 import { Reveal } from "@/components/ui/Reveal";
-import { services } from "@/content/site-content";
+import { homeCopy, services } from "@/content/site-content";
+import { ArrowRight } from "lucide-react";
 import Link from "next/link";
+import { cn } from "@/lib/utils";
 
 export function ServicesPreview() {
+  const { services: copy } = homeCopy;
   const featured = services.find((service) => service.featured) ?? services[0];
-  const others = services.filter((service) => service.id !== featured.id);
+  const ordered = [
+    featured,
+    ...services.filter((service) => service.id !== featured.id),
+  ];
 
   return (
-    <Section>
-      <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
-        <SectionHeader
-          eyebrow="Leistungen"
-          title="Unterstützung, die zum Alltag passt"
-          description="Vier Leistungsbereiche – redaktionell aufbereitet, ohne medizinische Garantien."
-        />
-        <Button href="/leistungen" variant="secondary" className="self-start md:self-auto">
-          Alle Leistungen
-        </Button>
-      </div>
-
-      <div className="mt-10 grid gap-6 lg:grid-cols-[1.2fr_0.8fr]">
-        <Reveal>
-          <article className="h-full bg-petrol p-7 text-white md:p-9">
-            <p className="text-sm font-semibold tracking-[0.08em] text-white/65 uppercase">
-              Schwerpunktthema
-            </p>
-            <h3 className="mt-3 font-display text-3xl leading-tight">
-              {featured.title}
-            </h3>
-            <p className="mt-4 max-w-xl text-lg leading-relaxed text-white/85">
-              {featured.short}
-            </p>
-            <ul className="mt-6 space-y-2 text-white/80">
-              {featured.details.slice(0, 3).map((detail) => (
-                <li key={detail} className="flex gap-3">
-                  <span className="mt-2 size-1.5 shrink-0 rounded-full bg-terracotta" aria-hidden />
-                  <span>{detail}</span>
-                </li>
-              ))}
-            </ul>
-            <Link
-              href={`/leistungen#${featured.id}`}
-              className="mt-8 inline-flex min-h-11 items-center font-semibold text-white underline-offset-4 hover:underline"
-            >
-              Mehr zur {featured.title}
-            </Link>
-          </article>
-        </Reveal>
-
-        <div className="grid gap-4">
-          {others.map((service, index) => (
-            <Reveal key={service.id} delayMs={index * 70}>
-              <article className="border border-line bg-surface px-5 py-5 transition-colors hover:border-petrol/30">
-                <h3 className="font-display text-xl text-petrol">{service.title}</h3>
-                <p className="mt-2 text-sm leading-relaxed text-ink-muted">
-                  {service.short}
-                </p>
-                <Link
-                  href={`/leistungen#${service.id}`}
-                  className="mt-3 inline-flex min-h-11 items-center text-sm font-semibold text-petrol underline-offset-4 hover:underline"
-                >
-                  Details lesen
-                </Link>
-              </article>
-            </Reveal>
-          ))}
+    <Section tone="cream">
+      <div className="grid gap-10 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:gap-14 xl:gap-16">
+        <div className="max-w-md lg:pt-2">
+          <p className="text-sm font-semibold tracking-[0.08em] text-sage uppercase">
+            {copy.eyebrow}
+          </p>
+          <h2 className="mt-3 font-display text-balance text-3xl leading-tight tracking-tight text-petrol md:text-4xl">
+            {copy.title}
+          </h2>
+          <p className="mt-4 text-base leading-relaxed text-ink-muted md:text-lg">
+            {copy.description}
+          </p>
+          <Button href="/leistungen" className="mt-7">
+            Alle Leistungen
+          </Button>
         </div>
+
+        <ol className="border-t border-line">
+          {ordered.map((service, index) => {
+            const number = String(index + 1).padStart(2, "0");
+            const isFeatured = service.id === featured.id;
+
+            return (
+              <li key={service.id}>
+                <Reveal delayMs={index * 50}>
+                  <div
+                    className={cn(
+                      "border-b border-line py-6",
+                      isFeatured
+                        ? "border-l-2 border-l-sage bg-sage-soft/55 px-4 sm:px-5 md:px-6 md:py-7"
+                        : "px-1",
+                    )}
+                  >
+                    <div className="flex gap-4 sm:gap-5">
+                      <span
+                        className="font-display text-2xl text-petrol/30 tabular-nums"
+                        aria-hidden
+                      >
+                        {number}
+                      </span>
+                      <div className="min-w-0 flex-1">
+                        <h3 className="font-display text-xl text-petrol md:text-2xl">
+                          {service.title}
+                        </h3>
+                        <p className="mt-2 text-sm leading-relaxed text-ink-muted md:text-base">
+                          {service.short}
+                        </p>
+                        {isFeatured ? (
+                          <ul className="mt-4 space-y-2">
+                            {service.details.slice(0, 3).map((detail) => (
+                              <li
+                                key={detail}
+                                className="flex gap-2.5 text-sm text-ink"
+                              >
+                                <span
+                                  className="mt-2 size-1.5 shrink-0 rounded-full bg-terracotta"
+                                  aria-hidden
+                                />
+                                <span>{detail}</span>
+                              </li>
+                            ))}
+                          </ul>
+                        ) : null}
+                        <Link
+                          href={`/leistungen#${service.id}`}
+                          className="mt-4 inline-flex min-h-11 items-center gap-1.5 text-sm font-semibold text-petrol underline-offset-4 hover:underline"
+                        >
+                          Mehr erfahren
+                          <ArrowRight className="size-4" aria-hidden />
+                        </Link>
+                      </div>
+                    </div>
+                  </div>
+                </Reveal>
+              </li>
+            );
+          })}
+        </ol>
       </div>
     </Section>
   );

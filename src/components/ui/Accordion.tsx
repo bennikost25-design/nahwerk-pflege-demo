@@ -32,8 +32,8 @@ export function Accordion({ items, className }: AccordionProps) {
                 id={buttonId}
                 type="button"
                 className={cn(
-                  "flex w-full min-h-14 items-center justify-between gap-4 py-4 text-left",
-                  "font-semibold text-petrol transition-colors hover:text-petrol-soft",
+                  "flex w-full min-h-14 items-center justify-between gap-4 py-4 text-left md:min-h-16 md:py-5",
+                  "font-display text-lg font-semibold text-petrol transition-colors hover:text-petrol-soft md:text-xl",
                 )}
                 aria-expanded={isOpen}
                 aria-controls={panelId}
