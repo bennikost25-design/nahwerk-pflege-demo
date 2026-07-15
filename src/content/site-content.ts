@@ -100,7 +100,7 @@ export const services = [
       "Begleitung bei Mahlzeiten, soweit sinnvoll und gewünscht",
       "Achtung der Privatsphäre und Gewohnheiten",
     ],
-    note: "Der konkrete Umfang wird im Erstgespräch individuell geklärt.",
+    note: "Den konkreten Umfang stimmen wir im Erstgespräch individuell mit Ihnen ab.",
   },
   {
     id: "behandlungspflege",
@@ -112,9 +112,9 @@ export const services = [
       "Umsetzung ärztlicher Verordnungen im Alltag",
       "Sorgfältige Dokumentation und Rückmeldung",
       "Absprachen mit Angehörigen und behandelnden Fachpersonen",
-      "Kein Ersatz für ärztliche Behandlung oder Diagnosen",
+      "Ärztliche Behandlung und Diagnostik bleiben beim Ärzteteam",
     ],
-    note: "Nur nach ärztlicher Verordnung und im Rahmen der jeweiligen Zuständigkeit.",
+    note: "Welche Maßnahmen möglich sind, richtet sich nach der ärztlichen Verordnung und der jeweiligen Zuständigkeit.",
   },
   {
     id: "haushalt",
@@ -128,7 +128,7 @@ export const services = [
       "Entlastung bei wiederkehrenden Alltagstätigkeiten",
       "Abstimmung auf Ihre Prioritäten und Kräfte",
     ],
-    note: "Nicht jede Aufgabe ist immer möglich – wir klären realistische Unterstützung.",
+    note: "Welche Aufgaben sinnvoll sind, stimmen wir realistisch auf Ihre Kräfte und Prioritäten ab.",
   },
   {
     id: "beratung",
@@ -140,11 +140,59 @@ export const services = [
       "Erste Orientierung zu Pflegebedarf und Versorgungsformen",
       "Gespräche zu Entlastungsmöglichkeiten für Angehörige",
       "Hinweise zu Abläufen und Ansprechpartnern",
-      "Keine Rechts- oder Kostenberatung mit verbindlicher Wirkung",
+      "Orientierung statt verbindlicher Kosten- oder Rechtsauskunft",
     ],
-    note: "Beratung ersetzt keine individuelle sozialrechtliche Auskunft.",
+    note: "Die Beratung ersetzt keine individuelle sozialrechtliche oder ärztliche Auskunft.",
   },
 ] as const;
+
+export const servicesPage = {
+  hero: {
+    eyebrow: "Unsere Leistungen",
+    title: "Unterstützung, die sich am Alltag orientiert.",
+    description:
+      "Unterstützung wird individuell abgestimmt. Gewohnheiten und der tatsächliche Bedarf stehen im Mittelpunkt – im persönlichen Gespräch klären wir den konkreten Umfang.",
+    asideNote: "Was tatsächlich sinnvoll und möglich ist, klären wir gemeinsam.",
+  },
+  clarify: {
+    eyebrow: "Was wir gemeinsam klären",
+    title: "Nicht jede Unterstützung passt zu jeder Situation.",
+    description:
+      "Bevor wir starten, besprechen wir die wichtigsten Rahmenbedingungen – ruhig, nachvollziehbar und ohne voreilige Zusagen.",
+    points: [
+      "Aktueller Unterstützungsbedarf",
+      "Persönliche Gewohnheiten und Prioritäten",
+      "Ärztliche Verordnungen, sofern erforderlich",
+      "Mögliche Zeiten und Versorgungsgebiet",
+      "Einbeziehung von Angehörigen, wenn gewünscht",
+    ],
+  },
+  counseling: {
+    eyebrow: "Beratung",
+    title: "Orientierung beginnt mit den richtigen Fragen.",
+    description:
+      "Im Beratungsgespräch geht es um Alltag, Kräfte und mögliche Unterstützung – ruhig und verständlich. Offene Fragen sind willkommen.",
+    topics: [
+      "Was wird im Alltag gebraucht?",
+      "Welche Unterstützung ist grundsätzlich denkbar?",
+      "Welche Ansprechpartner oder nächsten Schritte sind relevant?",
+    ],
+    note: "Beratung ersetzt keine ärztliche oder verbindliche sozialrechtliche Auskunft.",
+  },
+  faq: {
+    eyebrow: "Häufige Fragen",
+    title: "Wichtige Antworten zu unseren Leistungen",
+    description:
+      "Eine erste Orientierung zu Möglichkeiten, Grenzen und dem persönlichen Gespräch.",
+  },
+  cta: {
+    eyebrow: "Persönlich klären",
+    title: "Welche Unterstützung passt zu Ihrer Situation?",
+    description:
+      "Im unverbindlichen Erstgespräch geht es um Ihren Alltag, offene Fragen und mögliche nächste Schritte.",
+    phoneNote: "Unverbindlich und ohne Verpflichtung.",
+  },
+} as const;
 
 export const processSteps = [
   {
@@ -513,7 +561,7 @@ export const faqServices = [
   {
     question: "Ersetzt die Website eine Beratung?",
     answer:
-      "Nein. Die Seiten erklären typische Themen in verständlicher Sprache. Verbindliche Absprachen entstehen nur im persönlichen Kontakt – und in dieser Demo überhaupt nicht.",
+      "Nein. Die Seiten erklären typische Themen in verständlicher Sprache. Verbindliche Absprachen entstehen im persönlichen Gespräch.",
   },
 ] as const;
 

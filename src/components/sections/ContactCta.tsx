@@ -2,14 +2,50 @@ import { Button } from "@/components/ui/Button";
 import { Section } from "@/components/ui/Section";
 import { contact, cta, homeCopy } from "@/content/site-content";
 
-type ContactCtaProps = {
-  /** Stärkere Abschlussvariante für die Startseite */
-  variant?: "default" | "closing";
+export type ContactClosingCopy = {
+  eyebrow: string;
+  title: string;
+  description: string;
+  phoneNote?: string;
+  primaryHref?: string;
+  primaryLabel?: string;
+  secondaryHref?: string;
+  secondaryLabel?: string;
+  showEmail?: boolean;
+  showHours?: boolean;
 };
 
-export function ContactCta({ variant = "default" }: ContactCtaProps) {
+type ContactCtaProps = {
+  /** Stärkere Abschlussvariante (Startseite / Leistungsseite) */
+  variant?: "default" | "closing";
+  /** Eigene Texte für die Closing-Variante; Standard: homeCopy.contact */
+  closing?: ContactClosingCopy;
+};
+
+export function ContactCta({
+  variant = "default",
+  closing,
+}: ContactCtaProps) {
   if (variant === "closing") {
-    const { contact: copy } = homeCopy;
+    const copy: ContactClosingCopy = closing ?? {
+      eyebrow: homeCopy.contact.eyebrow,
+      title: homeCopy.contact.title,
+      description: homeCopy.contact.description,
+      phoneNote: homeCopy.contact.phoneNote,
+      primaryHref: cta.primary.href,
+      primaryLabel: cta.primary.label,
+      secondaryHref: cta.secondary.href,
+      secondaryLabel: cta.secondary.label,
+      showEmail: true,
+      showHours: true,
+    };
+
+    const showEmail = copy.showEmail !== false;
+    const showHours = copy.showHours !== false;
+    const primaryHref = copy.primaryHref ?? cta.primary.href;
+    const primaryLabel = copy.primaryLabel ?? cta.primary.label;
+    const secondaryHref = copy.secondaryHref ?? cta.secondary.href;
+    const secondaryLabel = copy.secondaryLabel ?? cta.secondary.label;
 
     return (
       <Section tone="cream" className="!py-12 md:!py-16">
@@ -33,52 +69,63 @@ export function ContactCta({ variant = "default" }: ContactCtaProps) {
                 >
                   {contact.phone}
                 </a>
-                <p className="mt-2 text-sm text-white/65">{copy.phoneNote}</p>
+                {copy.phoneNote ? (
+                  <p className="mt-2 text-sm text-white/65">{copy.phoneNote}</p>
+                ) : null}
               </div>
             </div>
 
             <div className="flex flex-col justify-between gap-8 bg-petrol-deep/35 px-6 py-8 sm:px-8 md:px-10 md:py-10">
               <div className="space-y-6">
-                <div>
-                  <p className="text-sm font-semibold text-white/60">E-Mail</p>
-                  <a
-                    href={contact.emailHref}
-                    className="mt-1 inline-flex min-h-11 items-center break-all text-lg font-semibold text-white underline-offset-4 hover:underline"
-                  >
-                    {contact.email}
-                  </a>
-                </div>
-                <div className="border-t border-white/15 pt-6">
-                  <p className="text-sm font-semibold text-white/60">
-                    Öffnungszeiten
+                {showEmail ? (
+                  <div>
+                    <p className="text-sm font-semibold text-white/60">E-Mail</p>
+                    <a
+                      href={contact.emailHref}
+                      className="mt-1 inline-flex min-h-11 items-center break-all text-lg font-semibold text-white underline-offset-4 hover:underline"
+                    >
+                      {contact.email}
+                    </a>
+                  </div>
+                ) : null}
+                {showHours ? (
+                  <div className={showEmail ? "border-t border-white/15 pt-6" : ""}>
+                    <p className="text-sm font-semibold text-white/60">
+                      Öffnungszeiten
+                    </p>
+                    <ul className="mt-2 space-y-1.5 text-white/85">
+                      {contact.hours.map((row) => (
+                        <li key={row.days} className="flex flex-wrap gap-x-2">
+                          <span className="font-medium">{row.days}</span>
+                          <span className="text-white/65">{row.time}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                ) : (
+                  <p className="text-sm leading-relaxed text-white/75">
+                    Schildern Sie Ihre Situation telefonisch oder über das
+                    Kontaktformular – wir finden einen passenden Termin.
                   </p>
-                  <ul className="mt-2 space-y-1.5 text-white/85">
-                    {contact.hours.map((row) => (
-                      <li key={row.days} className="flex flex-wrap gap-x-2">
-                        <span className="font-medium">{row.days}</span>
-                        <span className="text-white/65">{row.time}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
+                )}
               </div>
 
               <div className="flex flex-col gap-3 border-t border-white/15 pt-6">
                 <Button
-                  href={cta.primary.href}
+                  href={primaryHref}
                   variant="terracotta"
                   size="lg"
                   className="w-full sm:w-auto"
                 >
-                  {cta.primary.label}
+                  {primaryLabel}
                 </Button>
                 <Button
-                  href={cta.secondary.href}
+                  href={secondaryHref}
                   variant="secondary"
                   size="lg"
                   className="w-full border-white/35 text-white hover:border-white hover:bg-white/10 sm:w-auto"
                 >
-                  {cta.secondary.label}
+                  {secondaryLabel}
                 </Button>
               </div>
             </div>
