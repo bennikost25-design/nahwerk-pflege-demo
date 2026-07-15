@@ -11,7 +11,7 @@ export function HeroSection() {
         <div className="absolute -bottom-16 left-[20%] h-48 w-56 rounded-full bg-terracotta-soft/35 blur-2xl" />
       </div>
 
-      <div className="container-site relative grid items-center gap-8 py-12 sm:gap-10 sm:py-14 md:gap-12 md:py-16 lg:grid-cols-[1.05fr_0.95fr] lg:gap-12 xl:gap-14 lg:py-20">
+      <div className="container-hero relative grid items-center gap-8 py-12 sm:gap-10 sm:py-14 md:gap-12 md:py-16 lg:grid-cols-[0.9fr_1.1fr] lg:gap-10 lg:py-20 xl:grid-cols-[0.85fr_1.15fr] xl:gap-12">
         <div className="relative z-[1] max-w-xl">
           <p className="text-sm font-semibold tracking-[0.1em] text-sage uppercase">
             {siteConfig.name}
@@ -33,7 +33,7 @@ export function HeroSection() {
           </div>
         </div>
 
-        <div className="relative z-[1] w-full max-w-[20.5rem] justify-self-center min-[380px]:max-w-sm sm:max-w-md lg:max-w-none lg:justify-self-stretch">
+        <div className="relative z-[1] w-full max-w-[20.5rem] justify-self-center min-[380px]:max-w-sm sm:max-w-md lg:max-w-[36.25rem] lg:justify-self-end xl:max-w-[38.75rem]">
           <div
             className="pointer-events-none absolute top-1/2 left-1/2 h-[82%] w-[92%] -translate-x-1/2 -translate-y-1/2 rounded-[46%_42%_48%_44%] bg-sage-soft/50"
             aria-hidden="true"
@@ -45,7 +45,7 @@ export function HeroSection() {
               width={1448}
               height={1086}
               priority
-              sizes="(max-width: 640px) 88vw, (max-width: 1024px) 420px, 480px"
+              sizes="(max-width: 640px) 88vw, (max-width: 1023px) 420px, (max-width: 1279px) 580px, 620px"
               className="h-auto w-full object-cover object-center"
             />
           </div>
