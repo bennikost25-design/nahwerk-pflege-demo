@@ -262,6 +262,7 @@ export const jobs = [
   {
     id: "pflegefachkraft",
     title: "Pflegefachkraft",
+    roleKey: "Pflegefachkraft",
     description:
       "Sie begleiten Menschen zu Hause, stimmen Versorgung ab und sind fester Ansprechpartner im Team.",
     workModels: ["Teilzeit", "Vollzeit", "flexible Tagdienste"],
@@ -269,12 +270,13 @@ export const jobs = [
       "Abgeschlossene Ausbildung in der Pflege oder vergleichbare Qualifikation",
       "Sicheres, ruhiges Auftreten im Umgang mit Menschen",
       "Bereitschaft zu Touren im Versorgungsgebiet",
-      "Führerschein von Vorteil (Beispielanforderung)",
+      "Führerschein von Vorteil",
     ],
   },
   {
     id: "pflegehilfskraft",
     title: "Pflegehilfskraft",
+    roleKey: "Pflegehilfskraft",
     description:
       "Sie unterstützen bei der Grundpflege und im Alltag – mit klarer Einarbeitung und erreichbaren Kolleginnen und Kollegen.",
     workModels: ["Teilzeit", "Minijob möglich", "Vormittagsdienste"],
@@ -288,6 +290,7 @@ export const jobs = [
   {
     id: "hauswirtschaft",
     title: "Mitarbeiter im Bereich Hauswirtschaft",
+    roleKey: "Hauswirtschaft",
     description:
       "Sie entlasten Haushalte bei praktischen Aufgaben und arbeiten eng mit dem Pflegeteam zusammen.",
     workModels: ["Teilzeit", "stundenweise Einsätze", "Vormittag/Nachmittag"],
@@ -321,21 +324,43 @@ export const contactPreferences = [
   "Beides ist in Ordnung",
 ] as const;
 
+export const careerValues = [
+  {
+    title: "Respektvoller Umgang",
+    description: "Mit Pflegebedürftigen, Angehörigen und im Team.",
+  },
+  {
+    title: "Zuverlässigkeit",
+    description: "Pünktliche Absprachen und verlässliche Touren.",
+  },
+  {
+    title: "Verständliche Kommunikation",
+    description: "Klare Worte statt Fachchinesisch im Alltag.",
+  },
+  {
+    title: "Zusammenarbeit",
+    description: "Abstimmung im Team und kurze Wege zu Kolleginnen und Kollegen.",
+  },
+] as const;
+
 export const workdayHighlights = [
   {
+    marker: "Tourenstart",
     title: "Morgenrunde und Tourenstart",
     description:
       "Kurze Abstimmung im Team, dann planbare Einsätze bei vertrauten Menschen.",
   },
   {
+    marker: "Im Einsatz",
     title: "Zeit für Gespräche",
     description:
       "Neben praktischen Aufgaben bleibt Raum für Fragen von Pflegebedürftigen und Angehörigen.",
   },
   {
+    marker: "Abschluss und Übergabe",
     title: "Dokumentation ohne Chaos",
     description:
-      "Klare Abläufe helfen, das Wichtige festzuhalten – ohne unnötigen Papierkram zur Schau zu stellen.",
+      "Klare Abläufe helfen, das Wichtige festzuhalten – ohne unnötigen Papierkram.",
   },
 ] as const;
 
@@ -344,13 +369,13 @@ export const applicationSteps = [
     step: "01",
     title: "Kurzbewerbung senden",
     description:
-      "Mit wenigen Angaben melden Sie Interesse – ohne Lebenslauf-Upload in dieser Demo.",
+      "Mit wenigen Angaben melden Sie Interesse – ohne Lebenslauf-Upload.",
   },
   {
     step: "02",
     title: "Rückmeldung erhalten",
     description:
-      "In einem realen Betrieb würde sich die Leitung melden. Hier wird der Ablauf nur simuliert.",
+      "Sie erhalten eine Rückmeldung zu Ihrem Interesse und den nächsten Schritten.",
   },
   {
     step: "03",
@@ -359,6 +384,64 @@ export const applicationSteps = [
       "Offenes Gespräch zu Erfahrungen, Wünschen und möglichen Einsatzzeiten.",
   },
 ] as const;
+
+export const careerPage = {
+  hero: {
+    eyebrow: "Arbeiten bei Nahwerk",
+    title: "Pflege soll nicht nur für andere funktionieren.",
+    description:
+      "Ein gutes Team braucht verlässliche Absprachen, ehrliche Kommunikation und Arbeitsbedingungen, die zum Leben passen.",
+    highlightTitle: "Kurzbewerbung ohne Lebenslauf",
+    highlightPoints: [
+      "Wenige persönliche Angaben",
+      "Gewünschte Tätigkeit und Stundenumfang auswählen",
+      "Bevorzugte Kontaktart selbst bestimmen",
+    ],
+  },
+  promises: {
+    eyebrow: "Was gute Arbeit erleichtert",
+    title: "Verlässlichkeit beginnt im eigenen Team.",
+    description:
+      "Gute Pflege braucht klare Organisation und erreichbare Ansprechpartner – auch damit der eigene Arbeitstag planbar bleibt.",
+  },
+  values: {
+    eyebrow: "Was uns wichtig ist",
+    title: "Fachlichkeit zählt. Haltung ebenso.",
+  },
+  jobs: {
+    title: "Offene Stellen",
+    note: "Demostellen einer fiktiven Website – ohne reale Ausschreibung und ohne Verpflichtung.",
+  },
+  workday: {
+    title: "Arbeitsalltag",
+    description:
+      "Ein Arbeitstag besteht aus guter Vorbereitung, persönlicher Begleitung und klarer Dokumentation.",
+  },
+  process: {
+    title: "Ablauf der Bewerbung",
+    description:
+      "Vom ersten Interesse bis zum Gespräch – in drei unkomplizierten Schritten.",
+  },
+  apply: {
+    eyebrow: "Kurzbewerbung",
+    title: "Der erste Schritt braucht keinen perfekten Lebenslauf.",
+    description:
+      "Mit wenigen Angaben zeigen Sie Interesse. Wir melden uns auf dem von Ihnen gewünschten Weg.",
+    benefits: [
+      "In wenigen Minuten ausgefüllt",
+      "Kein Lebenslauf-Upload",
+      "Kontakt per Telefon oder E-Mail wählbar",
+    ],
+    demoNote:
+      "Demoformular: Es werden keine Angaben gespeichert oder versendet.",
+  },
+  faq: {
+    eyebrow: "Noch Fragen?",
+    title: "Wichtige Antworten vor dem ersten Gespräch",
+    description:
+      "Kurze Orientierung zu Kurzbewerbung, Daten und möglichen Arbeitszeiten.",
+  },
+} as const;
 
 export const faqHome = [
   {

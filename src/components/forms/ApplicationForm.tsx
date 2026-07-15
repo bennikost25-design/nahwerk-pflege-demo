@@ -6,9 +6,19 @@ import {
   contactPreferences,
   hoursOptions,
 } from "@/content/site-content";
+import {
+  CAREER_ROLE_EVENT,
+  type CareerRoleDetail,
+} from "@/lib/career-role";
 import { cn } from "@/lib/utils";
 import { CheckCircle2 } from "lucide-react";
-import { FormEvent, useId, useState, type ReactNode } from "react";
+import {
+  FormEvent,
+  useEffect,
+  useId,
+  useState,
+  type ReactNode,
+} from "react";
 
 type FormState = {
   firstName: string;
@@ -76,13 +86,37 @@ function validate(values: FormState): FormErrors {
 }
 
 const fieldClass =
-  "mt-1.5 w-full min-h-11 rounded-[var(--radius-sm)] border border-line bg-white px-3 py-2.5 text-ink transition-colors focus:border-petrol";
+  "mt-2 w-full min-h-11 rounded-[var(--radius-sm)] border border-line bg-white px-3.5 py-2.5 text-ink transition-colors focus-visible:border-petrol focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-petrol/25";
 
 export function ApplicationForm() {
   const formId = useId();
   const [values, setValues] = useState<FormState>(initial);
   const [errors, setErrors] = useState<FormErrors>({});
   const [submitted, setSubmitted] = useState(false);
+
+  useEffect(() => {
+    function onSelectRole(event: Event) {
+      const custom = event as CustomEvent<CareerRoleDetail>;
+      const role = custom.detail?.role;
+      if (!role || !applicationRoles.includes(role as (typeof applicationRoles)[number])) {
+        return;
+      }
+      setSubmitted(false);
+      setValues((prev) => ({ ...prev, role }));
+      setErrors((prev) => {
+        if (!prev.role) return prev;
+        const next = { ...prev };
+        delete next.role;
+        return next;
+      });
+      window.setTimeout(() => {
+        document.getElementById(`${formId}-role`)?.focus();
+      }, 350);
+    }
+
+    window.addEventListener(CAREER_ROLE_EVENT, onSelectRole);
+    return () => window.removeEventListener(CAREER_ROLE_EVENT, onSelectRole);
+  }, [formId]);
 
   function update<K extends keyof FormState>(key: K, value: FormState[K]) {
     setValues((prev) => ({ ...prev, [key]: value }));
@@ -110,12 +144,15 @@ export function ApplicationForm() {
   if (submitted) {
     return (
       <div
-        className="border border-sage/30 bg-sage-soft/60 p-6 md:p-8"
+        className="border-t-2 border-sage bg-sage-soft/50 px-5 py-7 md:px-8 md:py-8"
         role="status"
         aria-live="polite"
       >
         <div className="flex gap-3">
-          <CheckCircle2 className="mt-0.5 size-6 shrink-0 text-sage" aria-hidden />
+          <CheckCircle2
+            className="mt-0.5 size-6 shrink-0 text-sage"
+            aria-hidden
+          />
           <div>
             <h3 className="font-display text-2xl text-petrol">
               Demo-Bewerbung erfasst
@@ -148,7 +185,7 @@ export function ApplicationForm() {
     <form
       onSubmit={onSubmit}
       noValidate
-      className="space-y-5 border border-line bg-surface p-5 md:p-7"
+      className="space-y-7 border-t-2 border-petrol/15 bg-surface/80 px-5 py-7 md:px-8 md:py-8"
       aria-describedby={`${formId}-demo-note`}
     >
       <p id={`${formId}-demo-note`} className="text-sm text-ink-muted">
@@ -156,120 +193,135 @@ export function ApplicationForm() {
         gesendet.
       </p>
 
-      <div className="grid gap-5 sm:grid-cols-2">
-        <Field
-          id={`${formId}-firstName`}
-          label="Vorname *"
-          error={errors.firstName}
-        >
-          <input
+      <fieldset className="space-y-5">
+        <legend className="font-display text-lg text-petrol">Persönliche Angaben</legend>
+        <div className="grid gap-5 sm:grid-cols-2">
+          <Field
             id={`${formId}-firstName`}
-            name="firstName"
-            autoComplete="given-name"
-            className={cn(fieldClass, errors.firstName && "border-terracotta")}
-            value={values.firstName}
-            onChange={(e) => update("firstName", e.target.value)}
-            aria-invalid={Boolean(errors.firstName)}
-            aria-describedby={
-              errors.firstName ? `${formId}-firstName-error` : undefined
-            }
-          />
-        </Field>
+            label="Vorname *"
+            error={errors.firstName}
+          >
+            <input
+              id={`${formId}-firstName`}
+              name="firstName"
+              autoComplete="given-name"
+              className={cn(fieldClass, errors.firstName && "border-terracotta")}
+              value={values.firstName}
+              onChange={(e) => update("firstName", e.target.value)}
+              aria-invalid={Boolean(errors.firstName)}
+              aria-describedby={
+                errors.firstName ? `${formId}-firstName-error` : undefined
+              }
+            />
+          </Field>
+          <Field
+            id={`${formId}-lastName`}
+            label="Nachname *"
+            error={errors.lastName}
+          >
+            <input
+              id={`${formId}-lastName`}
+              name="lastName"
+              autoComplete="family-name"
+              className={cn(fieldClass, errors.lastName && "border-terracotta")}
+              value={values.lastName}
+              onChange={(e) => update("lastName", e.target.value)}
+              aria-invalid={Boolean(errors.lastName)}
+              aria-describedby={
+                errors.lastName ? `${formId}-lastName-error` : undefined
+              }
+            />
+          </Field>
+        </div>
+
         <Field
-          id={`${formId}-lastName`}
-          label="Nachname *"
-          error={errors.lastName}
+          id={`${formId}-contact`}
+          label="Telefonnummer oder E-Mail *"
+          error={errors.contact}
         >
           <input
-            id={`${formId}-lastName`}
-            name="lastName"
-            autoComplete="family-name"
-            className={cn(fieldClass, errors.lastName && "border-terracotta")}
-            value={values.lastName}
-            onChange={(e) => update("lastName", e.target.value)}
-            aria-invalid={Boolean(errors.lastName)}
+            id={`${formId}-contact`}
+            name="contact"
+            autoComplete="email"
+            className={cn(fieldClass, errors.contact && "border-terracotta")}
+            value={values.contact}
+            onChange={(e) => update("contact", e.target.value)}
+            aria-invalid={Boolean(errors.contact)}
             aria-describedby={
-              errors.lastName ? `${formId}-lastName-error` : undefined
+              errors.contact ? `${formId}-contact-error` : undefined
             }
           />
         </Field>
-      </div>
+      </fieldset>
 
-      <Field
-        id={`${formId}-contact`}
-        label="Telefonnummer oder E-Mail *"
-        error={errors.contact}
-      >
-        <input
-          id={`${formId}-contact`}
-          name="contact"
-          autoComplete="email"
-          className={cn(fieldClass, errors.contact && "border-terracotta")}
-          value={values.contact}
-          onChange={(e) => update("contact", e.target.value)}
-          aria-invalid={Boolean(errors.contact)}
-          aria-describedby={
-            errors.contact ? `${formId}-contact-error` : undefined
-          }
-        />
-      </Field>
-
-      <div className="grid gap-5 sm:grid-cols-2">
-        <Field
-          id={`${formId}-role`}
-          label="Gewünschte Tätigkeit *"
-          error={errors.role}
-        >
-          <select
+      <fieldset className="space-y-5 border-t border-line pt-6">
+        <legend className="font-display text-lg text-petrol">
+          Tätigkeit und Umfang
+        </legend>
+        <div className="grid gap-5 sm:grid-cols-2">
+          <Field
             id={`${formId}-role`}
-            name="role"
-            className={cn(fieldClass, errors.role && "border-terracotta")}
-            value={values.role}
-            onChange={(e) => update("role", e.target.value)}
-            aria-invalid={Boolean(errors.role)}
-            aria-describedby={errors.role ? `${formId}-role-error` : undefined}
+            label="Gewünschte Tätigkeit *"
+            error={errors.role}
           >
-            <option value="">Bitte auswählen</option>
-            {applicationRoles.map((role) => (
-              <option key={role} value={role}>
-                {role}
-              </option>
-            ))}
-          </select>
-        </Field>
-        <Field
-          id={`${formId}-hours`}
-          label="Gewünschter Stundenumfang *"
-          error={errors.hours}
-        >
-          <select
+            <select
+              id={`${formId}-role`}
+              name="role"
+              className={cn(fieldClass, errors.role && "border-terracotta")}
+              value={values.role}
+              onChange={(e) => update("role", e.target.value)}
+              aria-invalid={Boolean(errors.role)}
+              aria-describedby={errors.role ? `${formId}-role-error` : undefined}
+            >
+              <option value="">Bitte auswählen</option>
+              {applicationRoles.map((role) => (
+                <option key={role} value={role}>
+                  {role}
+                </option>
+              ))}
+            </select>
+          </Field>
+          <Field
             id={`${formId}-hours`}
-            name="hours"
-            className={cn(fieldClass, errors.hours && "border-terracotta")}
-            value={values.hours}
-            onChange={(e) => update("hours", e.target.value)}
-            aria-invalid={Boolean(errors.hours)}
-            aria-describedby={errors.hours ? `${formId}-hours-error` : undefined}
+            label="Gewünschter Stundenumfang *"
+            error={errors.hours}
           >
-            <option value="">Bitte auswählen</option>
-            {hoursOptions.map((option) => (
-              <option key={option} value={option}>
-                {option}
-              </option>
-            ))}
-          </select>
-        </Field>
-      </div>
+            <select
+              id={`${formId}-hours`}
+              name="hours"
+              className={cn(fieldClass, errors.hours && "border-terracotta")}
+              value={values.hours}
+              onChange={(e) => update("hours", e.target.value)}
+              aria-invalid={Boolean(errors.hours)}
+              aria-describedby={
+                errors.hours ? `${formId}-hours-error` : undefined
+              }
+            >
+              <option value="">Bitte auswählen</option>
+              {hoursOptions.map((option) => (
+                <option key={option} value={option}>
+                  {option}
+                </option>
+              ))}
+            </select>
+          </Field>
+        </div>
+      </fieldset>
 
-      <fieldset>
+      <fieldset className="border-t border-line pt-6">
         <legend className="text-sm font-semibold text-ink">
           Bevorzugte Kontaktart *
         </legend>
-        <div className="mt-3 space-y-2">
+        <div className="mt-3 grid gap-2 sm:grid-cols-3">
           {contactPreferences.map((option) => (
             <label
               key={option}
-              className="flex min-h-11 cursor-pointer items-center gap-3 rounded-[var(--radius-sm)] px-1"
+              className={cn(
+                "flex min-h-12 cursor-pointer items-center gap-3 rounded-[var(--radius-sm)] border px-3",
+                values.preference === option
+                  ? "border-petrol/40 bg-white"
+                  : "border-line bg-white/60",
+              )}
             >
               <input
                 type="radio"
@@ -279,7 +331,7 @@ export function ApplicationForm() {
                 onChange={() => update("preference", option)}
                 className="size-4 accent-petrol"
               />
-              <span>{option}</span>
+              <span className="text-sm">{option}</span>
             </label>
           ))}
         </div>
@@ -305,8 +357,8 @@ export function ApplicationForm() {
         />
       </Field>
 
-      <div>
-        <label className="flex cursor-pointer items-start gap-3">
+      <div className="border-t border-line pt-6">
+        <label className="flex min-h-12 cursor-pointer items-start gap-3 rounded-[var(--radius-sm)] border border-line bg-white/70 px-3 py-3">
           <input
             id={`${formId}-privacy`}
             type="checkbox"
@@ -335,7 +387,7 @@ export function ApplicationForm() {
         ) : null}
       </div>
 
-      <Button type="submit" size="lg">
+      <Button type="submit" size="lg" className="w-full sm:w-auto">
         Kurzbewerbung absenden (Demo)
       </Button>
     </form>
@@ -360,7 +412,11 @@ function Field({
       </label>
       {children}
       {error ? (
-        <p id={`${id}-error`} className="mt-1.5 text-sm text-terracotta" role="alert">
+        <p
+          id={`${id}-error`}
+          className="mt-1.5 text-sm text-terracotta"
+          role="alert"
+        >
           {error}
         </p>
       ) : null}
