@@ -11,7 +11,7 @@ type SectionProps = {
 const tones: Record<NonNullable<SectionProps["tone"]>, string> = {
   cream: "bg-cream text-ink",
   surface: "bg-surface text-ink",
-  petrol: "bg-petrol text-white",
+  petrol: "bg-brand text-on-brand",
   sage: "bg-sage-soft text-ink",
 };
 
@@ -48,14 +48,14 @@ export function SectionHeader({
       className={cn(
         "max-w-2xl",
         align === "center" && "mx-auto text-center",
-        light ? "text-white" : "text-ink",
+        light ? "text-on-brand" : "text-ink",
       )}
     >
       {eyebrow ? (
         <p
           className={cn(
             "mb-3 text-sm font-semibold tracking-[0.08em] uppercase",
-            light ? "text-white/75" : "text-sage",
+            light ? "text-on-brand/75" : "text-sage",
           )}
         >
           {eyebrow}
@@ -64,7 +64,7 @@ export function SectionHeader({
       <h2
         className={cn(
           "font-display text-balance text-3xl leading-tight tracking-tight md:text-4xl",
-          light ? "text-white" : "text-petrol",
+          light ? "text-on-brand" : "text-petrol",
         )}
       >
         {title}
@@ -73,7 +73,7 @@ export function SectionHeader({
         <p
           className={cn(
             "mt-4 text-base leading-relaxed md:text-lg",
-            light ? "text-white/85" : "text-ink-muted",
+            light ? "text-on-brand/85" : "text-ink-muted",
           )}
         >
           {description}

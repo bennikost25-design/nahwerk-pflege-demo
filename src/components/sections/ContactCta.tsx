@@ -49,68 +49,72 @@ export function ContactCta({
 
     return (
       <Section tone="cream" className="!py-12 md:!py-16">
-        <div className="overflow-hidden rounded-[1.25rem] bg-petrol text-white md:rounded-2xl">
+        <div className="overflow-hidden rounded-[1.25rem] bg-brand text-on-brand md:rounded-2xl">
           <div className="grid lg:grid-cols-[1.15fr_0.85fr]">
-            <div className="border-b border-white/15 px-6 py-8 sm:px-8 md:px-10 md:py-10 lg:border-r lg:border-b-0">
-              <p className="text-sm font-semibold tracking-[0.08em] text-white/65 uppercase">
+            <div className="border-b border-on-brand/15 px-6 py-8 sm:px-8 md:px-10 md:py-10 lg:border-r lg:border-b-0">
+              <p className="text-sm font-semibold tracking-[0.08em] text-on-brand/65 uppercase">
                 {copy.eyebrow}
               </p>
-              <h2 className="mt-3 max-w-xl font-display text-balance text-3xl leading-tight tracking-tight text-white md:text-4xl">
+              <h2 className="mt-3 max-w-xl font-display text-balance text-3xl leading-tight tracking-tight text-on-brand md:text-4xl">
                 {copy.title}
               </h2>
-              <p className="mt-4 max-w-lg text-base leading-relaxed text-white/80 md:text-lg">
+              <p className="mt-4 max-w-lg text-base leading-relaxed text-on-brand/80 md:text-lg">
                 {copy.description}
               </p>
               <div className="mt-8">
-                <p className="text-sm font-semibold text-white/60">Telefon</p>
+                <p className="text-sm font-semibold text-on-brand/60">Telefon</p>
                 <a
                   href={contact.phoneHref}
-                  className="mt-1 inline-flex min-h-12 items-center font-display text-3xl tracking-tight text-white sm:text-4xl"
+                  className="mt-1 inline-flex min-h-12 items-center font-display text-3xl tracking-tight text-on-brand sm:text-4xl"
                 >
                   {contact.phone}
                 </a>
                 {copy.phoneNote ? (
-                  <p className="mt-2 text-sm text-white/65">{copy.phoneNote}</p>
+                  <p className="mt-2 text-sm text-on-brand/65">{copy.phoneNote}</p>
                 ) : null}
               </div>
             </div>
 
-            <div className="flex flex-col justify-between gap-8 bg-petrol-deep/35 px-6 py-8 sm:px-8 md:px-10 md:py-10">
+            <div className="flex flex-col justify-between gap-8 bg-brand-deep/35 px-6 py-8 sm:px-8 md:px-10 md:py-10">
               <div className="space-y-6">
                 {showEmail ? (
                   <div>
-                    <p className="text-sm font-semibold text-white/60">E-Mail</p>
+                    <p className="text-sm font-semibold text-on-brand/60">E-Mail</p>
                     <a
                       href={contact.emailHref}
-                      className="mt-1 inline-flex min-h-11 items-center break-all text-lg font-semibold text-white underline-offset-4 hover:underline"
+                      className="mt-1 inline-flex min-h-11 items-center break-all text-lg font-semibold text-on-brand underline-offset-4 hover:underline"
                     >
                       {contact.email}
                     </a>
                   </div>
                 ) : null}
                 {showHours ? (
-                  <div className={showEmail ? "border-t border-white/15 pt-6" : ""}>
-                    <p className="text-sm font-semibold text-white/60">
+                  <div
+                    className={
+                      showEmail ? "border-t border-on-brand/15 pt-6" : ""
+                    }
+                  >
+                    <p className="text-sm font-semibold text-on-brand/60">
                       Öffnungszeiten
                     </p>
-                    <ul className="mt-2 space-y-1.5 text-white/85">
+                    <ul className="mt-2 space-y-1.5 text-on-brand/85">
                       {contact.hours.map((row) => (
                         <li key={row.days} className="flex flex-wrap gap-x-2">
                           <span className="font-medium">{row.days}</span>
-                          <span className="text-white/65">{row.time}</span>
+                          <span className="text-on-brand/65">{row.time}</span>
                         </li>
                       ))}
                     </ul>
                   </div>
                 ) : (
-                  <p className="text-sm leading-relaxed text-white/75">
+                  <p className="text-sm leading-relaxed text-on-brand/75">
                     Schildern Sie Ihre Situation telefonisch oder über das
                     Kontaktformular – wir finden einen passenden Termin.
                   </p>
                 )}
               </div>
 
-              <div className="flex flex-col gap-3 border-t border-white/15 pt-6">
+              <div className="flex flex-col gap-3 border-t border-on-brand/15 pt-6">
                 <Button
                   href={primaryHref}
                   variant="terracotta"
@@ -123,7 +127,7 @@ export function ContactCta({
                   href={secondaryHref}
                   variant="secondary"
                   size="lg"
-                  className="w-full border-white/35 text-white hover:border-white hover:bg-white/10 sm:w-auto"
+                  className="w-full border-on-brand/35 text-on-brand hover:border-on-brand hover:bg-on-brand/10 sm:w-auto"
                 >
                   {secondaryLabel}
                 </Button>

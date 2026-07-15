@@ -34,7 +34,7 @@ export function ProcessSection() {
                 ) : null}
 
                 <div
-                  className="relative z-[1] flex size-8 shrink-0 items-center justify-center rounded-full border border-petrol/25 bg-cream font-display text-sm font-semibold text-petrol md:mb-5 md:size-10 md:text-base"
+                  className="relative z-[1] flex size-8 shrink-0 items-center justify-center rounded-full border border-petrol/25 bg-elevated font-display text-sm font-semibold text-petrol md:mb-5 md:size-10 md:text-base"
                   aria-hidden
                 >
                   {step.step}

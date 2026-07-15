@@ -31,16 +31,16 @@ export default function KarrierePage() {
   return (
     <>
       {/* 1. Hero */}
-      <section className="border-b border-line bg-petrol text-white">
+      <section className="border-b border-line bg-brand text-on-brand">
         <div className="container-site grid gap-10 py-12 md:py-16 lg:grid-cols-[1.05fr_0.95fr] lg:items-center lg:gap-14 lg:py-20">
           <div>
-            <p className="text-sm font-semibold tracking-[0.08em] text-white/70 uppercase">
+            <p className="text-sm font-semibold tracking-[0.08em] text-on-brand/70 uppercase">
               {copy.hero.eyebrow}
             </p>
             <h1 className="mt-3 max-w-xl font-display text-balance text-[2rem] leading-[1.12] tracking-tight min-[380px]:text-4xl md:text-5xl">
               {copy.hero.title}
             </h1>
-            <p className="mt-5 max-w-lg text-base leading-relaxed text-white/85 md:text-lg">
+            <p className="mt-5 max-w-lg text-base leading-relaxed text-on-brand/85 md:text-lg">
               {copy.hero.description}
             </p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
@@ -51,30 +51,30 @@ export default function KarrierePage() {
                 href="#stellen"
                 variant="secondary"
                 size="lg"
-                className="border-white/35 text-white hover:border-white hover:bg-white/10"
+                className="border-on-brand/35 text-on-brand hover:border-on-brand hover:bg-on-brand/10"
               >
                 Offene Stellen ansehen
               </Button>
             </div>
           </div>
 
-          <aside className="border-l-2 border-terracotta bg-petrol-soft/25 px-5 py-6 sm:px-6 md:px-7 md:py-7">
-            <h2 className="font-display text-2xl text-white">
+          <aside className="border-l-2 border-terracotta bg-brand-soft/25 px-5 py-6 sm:px-6 md:px-7 md:py-7">
+            <h2 className="font-display text-2xl text-on-brand">
               {copy.hero.highlightTitle}
             </h2>
-            <ol className="mt-5 space-y-0 border-t border-white/20">
+            <ol className="mt-5 space-y-0 border-t border-on-brand/20">
               {copy.hero.highlightPoints.map((point, index) => (
                 <li
                   key={point}
-                  className="grid grid-cols-[auto_1fr] gap-3 border-b border-white/20 py-3.5"
+                  className="grid grid-cols-[auto_1fr] gap-3 border-b border-on-brand/20 py-3.5"
                 >
                   <span
-                    className="font-display text-base text-white/40 tabular-nums"
+                    className="font-display text-base text-on-brand/40 tabular-nums"
                     aria-hidden
                   >
                     {String(index + 1).padStart(2, "0")}
                   </span>
-                  <span className="text-sm leading-relaxed text-white/90 md:text-base">
+                  <span className="text-sm leading-relaxed text-on-brand/90 md:text-base">
                     {point}
                   </span>
                 </li>

@@ -20,13 +20,13 @@ type ButtonAsLink = CommonProps & {
 
 const variants: Record<NonNullable<CommonProps["variant"]>, string> = {
   primary:
-    "bg-petrol text-white hover:bg-petrol-deep border border-transparent",
+    "bg-brand text-on-brand hover:bg-brand-deep border border-transparent",
   secondary:
-    "bg-transparent text-petrol border border-petrol/30 hover:border-petrol hover:bg-white/60",
+    "bg-transparent text-petrol border border-petrol/30 hover:border-petrol hover:bg-elevated/70",
   ghost:
     "bg-transparent text-petrol border border-transparent hover:bg-cream-deep",
   terracotta:
-    "bg-terracotta text-white hover:bg-[#a55c41] border border-transparent",
+    "bg-terracotta text-on-brand hover:bg-[#a55c41] border border-transparent",
 };
 
 const sizes: Record<NonNullable<CommonProps["size"]>, string> = {

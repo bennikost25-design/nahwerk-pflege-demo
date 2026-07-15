@@ -10,16 +10,16 @@ export function CareerTeaser() {
     <Section tone="petrol" className="!py-12 md:!py-16">
       <div className="grid gap-10 lg:grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)] lg:gap-12 xl:gap-16 lg:items-start">
         <div className="max-w-xl">
-          <p className="text-sm font-semibold tracking-[0.08em] text-white/70 uppercase">
+          <p className="text-sm font-semibold tracking-[0.08em] text-on-brand/70 uppercase">
             {career.eyebrow}
           </p>
-          <h2 className="mt-3 font-display text-balance text-3xl leading-tight tracking-tight text-white md:text-4xl">
+          <h2 className="mt-3 font-display text-balance text-3xl leading-tight tracking-tight text-on-brand md:text-4xl">
             {career.title}
           </h2>
-          <p className="mt-4 text-base leading-relaxed text-white/85 md:text-lg">
+          <p className="mt-4 text-base leading-relaxed text-on-brand/85 md:text-lg">
             {career.description}
           </p>
-          <p className="mt-5 inline-flex border-l-2 border-terracotta pl-3 text-sm font-semibold tracking-wide text-white">
+          <p className="mt-5 inline-flex border-l-2 border-terracotta pl-3 text-sm font-semibold tracking-wide text-on-brand">
             {career.highlight}
           </p>
           <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
@@ -30,28 +30,28 @@ export function CareerTeaser() {
               href="/karriere#stellen"
               variant="secondary"
               size="lg"
-              className="border-white/35 text-white hover:border-white hover:bg-white/10"
+              className="border-on-brand/35 text-on-brand hover:border-on-brand hover:bg-on-brand/10"
             >
               Offene Stellen ansehen
             </Button>
           </div>
         </div>
 
-        <ul className="border-t border-white/20">
+        <ul className="border-t border-on-brand/20">
           {employerPromises.map((item, index) => (
             <Reveal key={item.title} delayMs={index * 55}>
-              <li className="grid grid-cols-[auto_1fr] gap-4 border-b border-white/20 py-5">
+              <li className="grid grid-cols-[auto_1fr] gap-4 border-b border-on-brand/20 py-5">
                 <span
-                  className="font-display text-lg text-white/35 tabular-nums"
+                  className="font-display text-lg text-on-brand/35 tabular-nums"
                   aria-hidden
                 >
                   {String(index + 1).padStart(2, "0")}
                 </span>
                 <div>
-                  <h3 className="font-display text-lg text-white md:text-xl">
+                  <h3 className="font-display text-lg text-on-brand md:text-xl">
                     {item.title}
                   </h3>
-                  <p className="mt-1.5 text-sm leading-relaxed text-white/75">
+                  <p className="mt-1.5 text-sm leading-relaxed text-on-brand/75">
                     {item.description}
                   </p>
                 </div>

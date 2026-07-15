@@ -86,7 +86,7 @@ function validate(values: FormState): FormErrors {
 }
 
 const fieldClass =
-  "mt-2 w-full min-h-11 rounded-[var(--radius-sm)] border border-line bg-white px-3.5 py-2.5 text-ink transition-colors focus-visible:border-petrol focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-petrol/25";
+  "mt-2 w-full min-h-11 rounded-[var(--radius-sm)] border border-line bg-elevated px-3.5 py-2.5 text-ink transition-colors focus-visible:border-petrol focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-petrol/25";
 
 export function ApplicationForm() {
   const formId = useId();
@@ -319,8 +319,8 @@ export function ApplicationForm() {
               className={cn(
                 "flex min-h-12 cursor-pointer items-center gap-3 rounded-[var(--radius-sm)] border px-3",
                 values.preference === option
-                  ? "border-petrol/40 bg-white"
-                  : "border-line bg-white/60",
+                  ? "border-petrol/40 bg-elevated"
+                  : "border-line bg-elevated/60",
               )}
             >
               <input
@@ -358,7 +358,7 @@ export function ApplicationForm() {
       </Field>
 
       <div className="border-t border-line pt-6">
-        <label className="flex min-h-12 cursor-pointer items-start gap-3 rounded-[var(--radius-sm)] border border-line bg-white/70 px-3 py-3">
+        <label className="flex min-h-12 cursor-pointer items-start gap-3 rounded-[var(--radius-sm)] border border-line bg-elevated/70 px-3 py-3">
           <input
             id={`${formId}-privacy`}
             type="checkbox"

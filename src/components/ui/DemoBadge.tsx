@@ -11,7 +11,7 @@ export function DemoBadge({ className, compact = false }: DemoBadgeProps) {
     <p
       className={cn(
         "inline-flex items-center gap-2 rounded-[var(--radius-sm)] border border-terracotta/25 bg-terracotta-soft text-ink",
-        compact ? "px-2.5 py-1 text-xs" : "px-3 py-1.5 text-sm",
+        compact ? "px-2 py-0.5 text-[0.7rem]" : "px-3 py-1.5 text-sm",
         className,
       )}
       role="note"
