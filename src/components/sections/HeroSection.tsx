@@ -11,10 +11,10 @@ function HeroCopy() {
       <p className="text-sm font-semibold tracking-[0.1em] text-sage uppercase">
         {siteConfig.name}
       </p>
-      <h1 className="mt-3 font-display text-balance text-[2rem] leading-[1.14] tracking-tight text-petrol min-[380px]:text-4xl sm:mt-4 sm:text-5xl lg:text-[3.35rem] lg:leading-[1.12]">
+      <h1 className="mt-3 font-display text-balance text-[2rem] leading-[1.14] tracking-tight text-petrol min-[380px]:text-4xl sm:mt-4 sm:text-5xl lg:text-[3.5rem] lg:leading-[1.12] xl:text-[3.625rem]">
         Pflege, die zu Ihrem Alltag passt.
       </h1>
-      <p className="mt-5 max-w-lg text-base leading-relaxed text-ink-muted sm:mt-6 sm:text-lg lg:max-w-none">
+      <p className="mt-5 max-w-lg text-base leading-relaxed text-ink-muted sm:mt-6 sm:text-lg lg:max-w-none xl:text-[1.1875rem]">
         Persönliche Unterstützung, verlässliche Ansprechpartner und kurze Wege
         – damit Sie zu Hause gut versorgt bleiben.
       </p>
@@ -76,21 +76,23 @@ export function HeroSection() {
           <div className="absolute bottom-10 left-[18%] h-40 w-52 rounded-full bg-cream-deep/60 blur-2xl" />
         </div>
 
-        <div className="relative flex items-center py-12 pl-[max(1.5rem,calc((100vw-1120px)/2))] pr-10 xl:pr-12">
-          <div className="w-full max-w-[34rem]">
+        <div className="relative flex items-center py-12 pl-[max(3rem,calc((100vw-1040px)/2))] pr-8 xl:pr-10">
+          <div className="w-full max-w-[36rem]">
             <HeroCopy />
           </div>
         </div>
 
-        <div className="relative min-h-[520px] max-h-[560px] overflow-hidden rounded-l-2xl shadow-[0_10px_28px_rgba(22,58,66,0.07)]">
-          <Image
-            src="/images/hero-care-scene.png"
-            alt={heroAlt}
-            fill
-            priority
-            sizes="52vw"
-            className="object-cover object-center"
-          />
+        <div className="relative flex min-h-[520px] max-h-[560px] flex-col pt-3 xl:pt-4">
+          <div className="relative min-h-0 flex-1 overflow-hidden rounded-l-2xl shadow-[0_10px_28px_rgba(22,58,66,0.07)]">
+            <Image
+              src="/images/hero-care-scene.png"
+              alt={heroAlt}
+              fill
+              priority
+              sizes="52vw"
+              className="object-cover object-center"
+            />
+          </div>
         </div>
       </div>
     </section>
