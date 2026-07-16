@@ -286,23 +286,20 @@ export function Header() {
               <button
                 ref={buttonRef}
                 type="button"
-                className="inline-flex h-10 shrink-0 items-center gap-1 rounded-[var(--radius-sm)] px-1.5 text-petrol transition-colors hover:bg-surface min-[360px]:gap-1.5 min-[360px]:px-2 lg:hidden"
+                className="inline-flex size-10 shrink-0 items-center justify-center rounded-[var(--radius-sm)] border border-line/70 bg-surface/50 text-petrol transition-colors hover:bg-surface lg:hidden"
                 aria-expanded={isOpen}
                 aria-controls={menuId}
-                aria-label={isOpen ? "Schließen" : "Übersicht"}
+                aria-label={isOpen ? "Übersicht schließen" : "Übersicht öffnen"}
                 onClick={() => {
                   if (isOpen) closeMenu();
                   else openMenu();
                 }}
               >
                 {isOpen ? (
-                  <X className="size-4 shrink-0" aria-hidden />
+                  <X className="size-5" aria-hidden />
                 ) : (
-                  <Menu className="size-4 shrink-0" aria-hidden />
+                  <Menu className="size-5" aria-hidden />
                 )}
-                <span className="hidden text-[0.8125rem] font-semibold tracking-wide min-[360px]:inline">
-                  {isOpen ? "Schließen" : "Übersicht"}
-                </span>
               </button>
             </div>
 
