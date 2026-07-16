@@ -88,6 +88,38 @@ function validate(values: FormState): FormErrors {
 const fieldClass =
   "mt-2 w-full min-h-11 rounded-[var(--radius-sm)] border border-line bg-elevated px-3.5 py-2.5 text-ink transition-colors focus-visible:border-petrol focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-petrol/25";
 
+const preferenceSlugs: Record<(typeof contactPreferences)[number], string> = {
+  Telefon: "phone",
+  "E-Mail": "email",
+  "Beides ist in Ordnung": "both",
+};
+
+function focusFirstInvalidField(formId: string, errors: FormErrors) {
+  const order: Array<keyof FormState> = [
+    "firstName",
+    "lastName",
+    "contact",
+    "role",
+    "hours",
+    "preference",
+    "message",
+    "privacy",
+  ];
+
+  const firstKey = order.find((key) => errors[key]);
+  if (!firstKey) return;
+
+  if (firstKey === "preference") {
+    const firstOption = contactPreferences[0];
+    document
+      .getElementById(`${formId}-preference-${preferenceSlugs[firstOption]}`)
+      ?.focus();
+    return;
+  }
+
+  document.getElementById(`${formId}-${firstKey}`)?.focus();
+}
+
 export function ApplicationForm() {
   const formId = useId();
   const [values, setValues] = useState<FormState>(initial);
@@ -133,9 +165,7 @@ export function ApplicationForm() {
     const nextErrors = validate(values);
     setErrors(nextErrors);
     if (Object.keys(nextErrors).length > 0) {
-      const firstKey = Object.keys(nextErrors)[0];
-      const el = document.getElementById(`${formId}-${firstKey}`);
-      el?.focus();
+      focusFirstInvalidField(formId, nextErrors);
       return;
     }
     setSubmitted(true);
@@ -308,32 +338,48 @@ export function ApplicationForm() {
         </div>
       </fieldset>
 
-      <fieldset className="border-t border-line pt-6">
+      <fieldset
+        className="border-t border-line pt-6"
+        aria-invalid={Boolean(errors.preference) || undefined}
+        aria-describedby={
+          errors.preference ? `${formId}-preference-error` : undefined
+        }
+      >
         <legend className="text-sm font-semibold text-ink">
           Bevorzugte Kontaktart *
         </legend>
         <div className="mt-3 grid gap-2 sm:grid-cols-3">
-          {contactPreferences.map((option) => (
-            <label
-              key={option}
-              className={cn(
-                "flex min-h-12 cursor-pointer items-center gap-3 rounded-[var(--radius-sm)] border px-3",
-                values.preference === option
-                  ? "border-petrol/40 bg-elevated"
-                  : "border-line bg-elevated/60",
-              )}
-            >
-              <input
-                type="radio"
-                name="preference"
-                value={option}
-                checked={values.preference === option}
-                onChange={() => update("preference", option)}
-                className="size-4 accent-petrol"
-              />
-              <span className="text-sm">{option}</span>
-            </label>
-          ))}
+          {contactPreferences.map((option) => {
+            const optionId = `${formId}-preference-${preferenceSlugs[option]}`;
+            return (
+              <label
+                key={option}
+                htmlFor={optionId}
+                className={cn(
+                  "flex min-h-12 cursor-pointer items-center gap-3 rounded-[var(--radius-sm)] border px-3",
+                  values.preference === option
+                    ? "border-petrol/40 bg-elevated"
+                    : "border-line bg-elevated/60",
+                )}
+              >
+                <input
+                  id={optionId}
+                  type="radio"
+                  name="preference"
+                  value={option}
+                  checked={values.preference === option}
+                  onChange={() => update("preference", option)}
+                  className="size-4 accent-petrol"
+                  aria-describedby={
+                    errors.preference
+                      ? `${formId}-preference-error`
+                      : undefined
+                  }
+                />
+                <span className="text-sm">{option}</span>
+              </label>
+            );
+          })}
         </div>
         {errors.preference ? (
           <p
@@ -358,14 +404,18 @@ export function ApplicationForm() {
       </Field>
 
       <div className="border-t border-line pt-6">
-        <label className="flex min-h-12 cursor-pointer items-start gap-3 rounded-[var(--radius-sm)] border border-line bg-elevated/70 px-3 py-3">
+        <label
+          htmlFor={`${formId}-privacy`}
+          className="flex min-h-12 cursor-pointer items-start gap-3 rounded-[var(--radius-sm)] border border-line bg-elevated/70 px-3 py-3"
+        >
           <input
             id={`${formId}-privacy`}
             type="checkbox"
             className="mt-1 size-4 accent-petrol"
             checked={values.privacy}
             onChange={(e) => update("privacy", e.target.checked)}
-            aria-invalid={Boolean(errors.privacy)}
+            aria-required="true"
+            aria-invalid={Boolean(errors.privacy) || undefined}
             aria-describedby={
               errors.privacy ? `${formId}-privacy-error` : undefined
             }

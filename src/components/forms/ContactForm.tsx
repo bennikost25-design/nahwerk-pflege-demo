@@ -59,7 +59,15 @@ function validate(values: FormState): FormErrors {
 }
 
 const fieldClass =
-  "mt-1.5 w-full min-h-11 rounded-[var(--radius-sm)] border border-line bg-elevated px-3 py-2.5 text-ink transition-colors focus:border-petrol";
+  "mt-1.5 w-full min-h-11 rounded-[var(--radius-sm)] border border-line bg-elevated px-3 py-2.5 text-ink transition-colors focus-visible:border-petrol focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-petrol/25";
+
+const fieldOrder: Array<keyof FormState> = [
+  "name",
+  "contact",
+  "topic",
+  "message",
+  "privacy",
+];
 
 export function ContactForm() {
   const formId = useId();
@@ -82,8 +90,10 @@ export function ContactForm() {
     const nextErrors = validate(values);
     setErrors(nextErrors);
     if (Object.keys(nextErrors).length > 0) {
-      const firstKey = Object.keys(nextErrors)[0];
-      document.getElementById(`${formId}-${firstKey}`)?.focus();
+      const firstKey = fieldOrder.find((key) => nextErrors[key]);
+      if (firstKey) {
+        document.getElementById(`${formId}-${firstKey}`)?.focus();
+      }
       return;
     }
     setSubmitted(true);
@@ -129,8 +139,9 @@ export function ContactForm() {
       onSubmit={onSubmit}
       noValidate
       className="space-y-5 border border-line bg-cream p-5 md:p-7"
+      aria-describedby={`${formId}-demo-note`}
     >
-      <p className="text-sm text-ink-muted">
+      <p id={`${formId}-demo-note`} className="text-sm text-ink-muted">
         Demo-Formular ohne Datenübertragung. Pflichtfelder mit *.
       </p>
 
@@ -140,11 +151,13 @@ export function ContactForm() {
         </label>
         <input
           id={`${formId}-name`}
+          name="name"
           className={cn(fieldClass, errors.name && "border-terracotta")}
           value={values.name}
           onChange={(e) => update("name", e.target.value)}
           autoComplete="name"
-          aria-invalid={Boolean(errors.name)}
+          aria-required="true"
+          aria-invalid={Boolean(errors.name) || undefined}
           aria-describedby={errors.name ? `${formId}-name-error` : undefined}
         />
         {errors.name ? (
@@ -160,10 +173,13 @@ export function ContactForm() {
         </label>
         <input
           id={`${formId}-contact`}
+          name="contact"
           className={cn(fieldClass, errors.contact && "border-terracotta")}
           value={values.contact}
           onChange={(e) => update("contact", e.target.value)}
-          aria-invalid={Boolean(errors.contact)}
+          autoComplete="email"
+          aria-required="true"
+          aria-invalid={Boolean(errors.contact) || undefined}
           aria-describedby={
             errors.contact ? `${formId}-contact-error` : undefined
           }
@@ -185,10 +201,12 @@ export function ContactForm() {
         </label>
         <select
           id={`${formId}-topic`}
+          name="topic"
           className={cn(fieldClass, errors.topic && "border-terracotta")}
           value={values.topic}
           onChange={(e) => update("topic", e.target.value)}
-          aria-invalid={Boolean(errors.topic)}
+          aria-required="true"
+          aria-invalid={Boolean(errors.topic) || undefined}
           aria-describedby={errors.topic ? `${formId}-topic-error` : undefined}
         >
           <option value="">Bitte auswählen</option>
@@ -211,11 +229,13 @@ export function ContactForm() {
         </label>
         <textarea
           id={`${formId}-message`}
+          name="message"
           rows={5}
           className={cn(fieldClass, "min-h-32", errors.message && "border-terracotta")}
           value={values.message}
           onChange={(e) => update("message", e.target.value)}
-          aria-invalid={Boolean(errors.message)}
+          aria-required="true"
+          aria-invalid={Boolean(errors.message) || undefined}
           aria-describedby={
             errors.message ? `${formId}-message-error` : undefined
           }
@@ -232,14 +252,19 @@ export function ContactForm() {
       </div>
 
       <div>
-        <label className="flex items-start gap-3">
+        <label
+          htmlFor={`${formId}-privacy`}
+          className="flex items-start gap-3"
+        >
           <input
             id={`${formId}-privacy`}
+            name="privacy"
             type="checkbox"
             className="mt-1 size-4 accent-petrol"
             checked={values.privacy}
             onChange={(e) => update("privacy", e.target.checked)}
-            aria-invalid={Boolean(errors.privacy)}
+            aria-required="true"
+            aria-invalid={Boolean(errors.privacy) || undefined}
             aria-describedby={
               errors.privacy ? `${formId}-privacy-error` : undefined
             }

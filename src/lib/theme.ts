@@ -53,14 +53,6 @@ export function applyThemePreference(preference: ThemePreference) {
   applyResolvedTheme(resolveTheme(preference));
 }
 
-export function cycleThemePreference(
-  current: ThemePreference,
-): ThemePreference {
-  if (current === "system") return "light";
-  if (current === "light") return "dark";
-  return "system";
-}
-
 export const themeLabels: Record<ThemePreference, string> = {
   light: "Hell",
   system: "System",

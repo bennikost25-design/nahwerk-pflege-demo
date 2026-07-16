@@ -8,7 +8,7 @@ import {
   setThemePreference as storeSetPreference,
   subscribeTheme,
 } from "@/lib/theme-store";
-import { cycleThemePreference, type ThemePreference } from "@/lib/theme";
+import type { ThemePreference } from "@/lib/theme";
 import {
   createContext,
   useCallback,
@@ -23,7 +23,6 @@ type ThemeContextValue = {
   preference: ThemePreference;
   resolved: "light" | "dark";
   setPreference: (preference: ThemePreference) => void;
-  cyclePreference: () => void;
 };
 
 const ThemeContext = createContext<ThemeContextValue | null>(null);
@@ -44,18 +43,13 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
     storeSetPreference(next);
   }, []);
 
-  const cyclePreference = useCallback(() => {
-    storeSetPreference(cycleThemePreference(getThemeState().preference));
-  }, []);
-
   const value = useMemo(
     () => ({
       preference: state.preference,
       resolved: state.resolved,
       setPreference,
-      cyclePreference,
     }),
-    [state.preference, state.resolved, setPreference, cyclePreference],
+    [state.preference, state.resolved, setPreference],
   );
 
   return (

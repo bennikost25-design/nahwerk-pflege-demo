@@ -1,30 +1,44 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import Script from "next/script";
 import { Footer } from "@/components/layout/Footer";
 import { Header } from "@/components/layout/Header";
 import { SkipLink } from "@/components/layout/SkipLink";
 import { ThemeProvider } from "@/components/theme/ThemeProvider";
 import { siteConfig } from "@/content/site-content";
+import { getRobotsMetadata } from "@/lib/metadata";
 import { themeInitScript } from "@/lib/theme-script";
 import "./globals.css";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
   title: {
-    default: `${siteConfig.name} – ${siteConfig.tagline} (Demo)`,
+    default: `${siteConfig.tagline} | ${siteConfig.name}`,
     template: `%s | ${siteConfig.name}`,
   },
   description:
-    "Demo-Website für einen fiktiven ambulanten Pflegedienst in Erfurt: Erstgespräch anfragen oder unkompliziert bewerben.",
+    "Fiktive Website-Demo für einen ambulanten Pflegedienst in Erfurt: Erstgespräch anfragen oder unkompliziert bewerben. Kein realer Pflegedienst.",
+  applicationName: `${siteConfig.name} – Website-Demo`,
   openGraph: {
+    title: `${siteConfig.tagline} | ${siteConfig.name}`,
+    description:
+      "Fiktive Website-Demo für einen ambulanten Pflegedienst in Erfurt. Kein realer Pflegedienst.",
+    url: siteConfig.url,
     siteName: siteConfig.name,
     locale: siteConfig.locale,
     type: "website",
   },
-  robots: {
-    index: true,
-    follow: true,
+  twitter: {
+    card: "summary_large_image",
+    title: `${siteConfig.tagline} | ${siteConfig.name}`,
+    description:
+      "Fiktive Website-Demo für einen ambulanten Pflegedienst in Erfurt. Kein realer Pflegedienst.",
   },
+  robots: getRobotsMetadata(),
+};
+
+export const viewport: Viewport = {
+  themeColor: "#163a42",
+  colorScheme: "light dark",
 };
 
 export default function RootLayout({

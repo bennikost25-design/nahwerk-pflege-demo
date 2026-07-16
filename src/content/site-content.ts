@@ -14,6 +14,12 @@ export const siteConfig = {
   url: "https://nahwerk-pflege-demo.vercel.app",
   locale: "de_DE",
   language: "de",
+  /**
+   * Zentrale Indexierungssteuerung.
+   * false = Demo nicht wie ein realer Pflegedienst indexieren.
+   * true erst setzen, wenn echte Kundendaten und rechtliche Seiten stehen.
+   */
+  allowIndexing: false,
 } as const;
 
 export const contact = {
@@ -567,14 +573,14 @@ export const faqServices = [
 
 export const pageMeta = {
   home: {
-    title: "Ambulante Pflege in Erfurt (Demo)",
+    title: "Ambulante Pflege in Erfurt",
     description:
-      "Demo-Website für einen fiktiven ambulanten Pflegedienst in Erfurt: Erstgespräch anfragen oder unkompliziert bewerben.",
+      "Fiktive Website-Demo für einen ambulanten Pflegedienst in Erfurt: Erstgespräch anfragen oder unkompliziert bewerben. Kein realer Pflegedienst.",
   },
   leistungen: {
     title: "Leistungen",
     description:
-      "Grundpflege, Behandlungspflege, Haushaltshilfe sowie Beratung und Entlastung – erläuterte Beispielleistungen einer Demo-Website.",
+      "Grundpflege, Behandlungspflege, Haushaltshilfe sowie Beratung und Entlastung – Beispielleistungen einer fiktiven Website-Demo.",
   },
   karriere: {
     title: "Karriere",
@@ -597,3 +603,13 @@ export const pageMeta = {
       "Platzhalter-Datenschutzhinweise einer fiktiven Demo-Website. Keine rechtlich geprüfte Vorlage.",
   },
 } as const;
+
+/** Öffentliche Routen für Sitemap und Canonicals */
+export const publicRoutes = [
+  "/",
+  "/leistungen",
+  "/karriere",
+  "/kontakt",
+  "/impressum",
+  "/datenschutz",
+] as const;

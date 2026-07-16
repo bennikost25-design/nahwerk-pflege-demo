@@ -1,3 +1,5 @@
+import { useId } from "react";
+
 type BrandMarkProps = {
   className?: string;
   /** Wenn true, erhält das SVG einen zugänglichen Titel (alleinstehend). */
@@ -14,15 +16,17 @@ export function BrandMark({
   titled = false,
   title = "Nahwerk Pflege",
 }: BrandMarkProps) {
+  const titleId = useId();
+
   if (titled) {
     return (
       <svg
         viewBox="0 0 32 32"
         className={className}
         role="img"
-        aria-labelledby="brand-mark-title"
+        aria-labelledby={titleId}
       >
-        <title id="brand-mark-title">{title}</title>
+        <title id={titleId}>{title}</title>
         <BrandPaths />
       </svg>
     );
