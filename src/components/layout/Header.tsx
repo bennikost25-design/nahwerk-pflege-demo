@@ -1,7 +1,7 @@
 "use client";
 
 import { BrandMark } from "@/components/brand/BrandMark";
-import { ThemeMenuControl, ThemeToggle } from "@/components/theme/ThemeToggle";
+import { ThemeToggle } from "@/components/theme/ThemeToggle";
 import { cta, navigation, siteConfig } from "@/content/site-content";
 import { cn } from "@/lib/utils";
 import { ArrowUpRight, Menu, X } from "lucide-react";
@@ -22,16 +22,6 @@ function isActivePath(pathname: string, href: string) {
   return href === "/" ? pathname === "/" : pathname.startsWith(href);
 }
 
-function mobilePageLabel(pathname: string): string {
-  if (pathname === "/") return "Startseite";
-  if (pathname.startsWith("/leistungen")) return "Leistungen";
-  if (pathname.startsWith("/karriere")) return "Karriere";
-  if (pathname.startsWith("/kontakt")) return "Kontakt";
-  if (pathname.startsWith("/impressum")) return "Impressum";
-  if (pathname.startsWith("/datenschutz")) return "Datenschutz";
-  return "Seite";
-}
-
 function subscribeToNothing() {
   return () => {};
 }
@@ -50,7 +40,6 @@ export function Header() {
   const buttonRef = useRef<HTMLButtonElement>(null);
   const panelRef = useRef<HTMLDivElement>(null);
   const isOpen = open && openedOnPath === pathname;
-  const currentPage = mobilePageLabel(pathname);
 
   const closeMenu = useCallback(() => {
     setOpen(false);
@@ -197,11 +186,7 @@ export function Header() {
             </Link>
           </div>
 
-          <div className="mt-8 shrink-0 border-t border-line pt-5">
-            <ThemeMenuControl />
-          </div>
-
-          <p className="mt-auto shrink-0 pt-8 text-xs leading-relaxed text-ink-muted">
+          <p className="mt-auto shrink-0 pt-10 text-xs leading-relaxed text-ink-muted">
             Fiktive Website-Demo – alle Angaben sind beispielhaft.
           </p>
         </div>
@@ -212,35 +197,32 @@ export function Header() {
   return (
     <>
       <header className="sticky top-0 z-50">
-        {/* Blur nur auf dem sichtbaren Balken – nicht als Ancestor des Fixed-Panels */}
         <div className="site-header bg-cream/85 backdrop-blur-md">
-          <div className="container-site relative flex h-[3.75rem] items-center gap-1.5 sm:gap-2 lg:h-[4.5rem] lg:gap-6 xl:gap-10">
+          <div className="relative mx-auto flex h-16 w-[min(1120px,calc(100%-1.25rem))] items-center gap-1.5 sm:w-[min(1120px,calc(100%-2rem))] sm:gap-2 md:w-[min(1120px,calc(100%-3rem))] lg:h-[4.5rem] lg:gap-6 xl:gap-10">
             <Link
               href="/"
               className="flex min-w-0 flex-1 items-center gap-2 py-1 lg:flex-none lg:gap-2.5"
               aria-label={`${siteConfig.name} – Startseite`}
             >
-              <BrandMark className="size-[1.7rem] shrink-0 text-petrol lg:size-8" />
+              <BrandMark className="size-8 shrink-0 text-petrol min-[390px]:size-[2.05rem] lg:size-8" />
               <span className="min-w-0">
                 <span className="flex items-baseline gap-1.5">
-                  <span className="whitespace-nowrap font-display text-[0.98rem] leading-[1.2] text-petrol lg:text-[1.28rem] lg:leading-[1.2]">
+                  <span className="whitespace-nowrap font-display text-[1.08rem] leading-[1.2] text-petrol lg:text-[1.28rem] lg:leading-[1.2]">
                     {siteConfig.name}
                   </span>
                   <span
-                    className="relative -top-0.5 hidden text-[0.62rem] font-semibold tracking-wide text-terracotta/80 uppercase lg:inline"
+                    className="relative -top-0.5 text-[0.55rem] font-semibold tracking-wide text-terracotta/80 uppercase lg:text-[0.62rem]"
                     title={siteConfig.demoNotice}
                   >
                     Demo
                   </span>
                 </span>
-                {/* Mobile: aktuelle Seite */}
-                <span className="mt-0.5 block text-[0.68rem] leading-tight text-ink-muted lg:hidden">
-                  {currentPage}
-                </span>
-                {/* Desktop: Tagline */}
-                <span className="mt-0.5 hidden text-[0.72rem] leading-tight text-ink-muted lg:block">
+                <span className="mt-0.5 block text-[0.62rem] leading-tight text-ink-muted lg:text-[0.72rem]">
                   {siteConfig.tagline}
-                  <span className="text-ink-muted/70"> · Fiktive Demo</span>
+                  <span className="hidden text-ink-muted/70 lg:inline">
+                    {" "}
+                    · Fiktive Demo
+                  </span>
                 </span>
               </span>
             </Link>
@@ -282,8 +264,7 @@ export function Header() {
             </nav>
 
             <div className="flex shrink-0 items-center gap-1 sm:gap-1.5 lg:gap-2">
-              <ThemeToggle className="hidden lg:inline-flex" />
-              <ThemeToggle variant="cycle" className="!size-9 lg:hidden" />
+              <ThemeToggle />
 
               <Link
                 href={cta.primary.href}
