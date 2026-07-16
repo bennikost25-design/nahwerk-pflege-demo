@@ -83,7 +83,7 @@ export default function KarrierePage() {
       <Section tone="cream">
         <div className="grid gap-10 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:gap-14 xl:gap-16">
           <div className="max-w-md lg:pt-1">
-            <p className="text-sm font-semibold tracking-[0.08em] text-sage uppercase">
+            <p className="text-sm font-semibold tracking-[0.08em] text-sage-text uppercase">
               {copy.promises.eyebrow}
             </p>
             <h2 className="mt-3 font-display text-balance text-3xl leading-tight tracking-tight text-petrol md:text-4xl">
@@ -123,7 +123,7 @@ export default function KarrierePage() {
       {/* 3. Was uns wichtig ist */}
       <Section tone="surface" className="!py-10 md:!py-12">
         <header className="max-w-2xl">
-          <p className="text-sm font-semibold tracking-[0.08em] text-sage uppercase">
+          <p className="text-sm font-semibold tracking-[0.08em] text-sage-text uppercase">
             {copy.values.eyebrow}
           </p>
           <h2 className="mt-2 font-display text-balance text-2xl leading-tight tracking-tight text-petrol md:text-3xl">
@@ -191,7 +191,7 @@ export default function KarrierePage() {
                       {job.description}
                     </p>
                     <div className="mt-5">
-                      <p className="text-sm font-semibold tracking-wide text-sage uppercase">
+                      <p className="text-sm font-semibold tracking-wide text-sage-text uppercase">
                         Arbeitszeit
                       </p>
                       <ul className="mt-3 flex flex-wrap gap-2">
@@ -209,7 +209,7 @@ export default function KarrierePage() {
                   </div>
 
                   <div>
-                    <h4 className="text-sm font-semibold tracking-wide text-sage uppercase">
+                    <h4 className="text-sm font-semibold tracking-wide text-sage-text uppercase">
                       Das bringen Sie mit
                     </h4>
                     <ul className="mt-4 space-y-3">
@@ -245,8 +245,15 @@ export default function KarrierePage() {
         </header>
 
         <div className="mt-10 md:mt-12">
+          {/* Rail: left/right = Marker-Radius bzw. Spaltenbreite − Radius (gap-8, 3 Spalten) */}
           <div className="relative mb-4 hidden h-2.5 md:block" aria-hidden>
-            <div className="absolute top-1/2 right-0 left-0 z-0 h-px -translate-y-1/2 bg-petrol/20" />
+            <div
+              className="absolute top-1/2 z-0 h-px -translate-y-1/2 bg-petrol/20"
+              style={{
+                left: "0.3125rem",
+                right: "calc((100% - 2 * 2rem) / 3 - 0.3125rem)",
+              }}
+            />
             <div className="relative z-[1] grid h-full grid-cols-3 gap-8">
               {workdayHighlights.map((item) => (
                 <div key={item.title} className="flex items-center">
@@ -272,7 +279,7 @@ export default function KarrierePage() {
                       aria-hidden
                     />
                     <div className="min-w-0 pb-8 md:pb-0">
-                      <p className="text-xs font-semibold tracking-[0.08em] text-sage uppercase">
+                      <p className="text-xs font-semibold tracking-[0.08em] text-sage-text uppercase">
                         {item.marker}
                       </p>
                       <h3 className="mt-2 font-display text-xl text-petrol">
@@ -302,8 +309,15 @@ export default function KarrierePage() {
         </header>
 
         <div className="mt-10 md:mt-12">
+          {/* Rail: left/right = Kreis-Radius bzw. Spaltenbreite − Radius (gap-8, 3 Spalten) */}
           <div className="relative mb-4 hidden h-10 md:block" aria-hidden>
-            <div className="absolute top-1/2 right-0 left-0 z-0 h-px -translate-y-1/2 bg-petrol/20" />
+            <div
+              className="absolute top-1/2 z-0 h-px -translate-y-1/2 bg-petrol/20"
+              style={{
+                left: "1.25rem",
+                right: "calc((100% - 2 * 2rem) / 3 - 1.25rem)",
+              }}
+            />
             <div className="relative z-[1] grid h-full grid-cols-3 gap-8">
               {applicationSteps.map((step) => (
                 <div key={step.step} className="flex items-center">
@@ -356,7 +370,7 @@ export default function KarrierePage() {
       <Section tone="surface" id="bewerbung" className="scroll-mt-24">
         <div className="grid gap-10 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:gap-12 xl:gap-14 lg:items-start">
           <div className="max-w-md">
-            <p className="text-sm font-semibold tracking-[0.08em] text-sage uppercase">
+            <p className="text-sm font-semibold tracking-[0.08em] text-sage-text uppercase">
               {copy.apply.eyebrow}
             </p>
             <h2 className="mt-3 font-display text-balance text-3xl leading-tight tracking-tight text-petrol md:text-4xl">

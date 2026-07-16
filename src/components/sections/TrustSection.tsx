@@ -11,7 +11,7 @@ export function TrustSection() {
   return (
     <Section tone="surface" className="!py-10 md:!py-12">
       <header className="max-w-2xl">
-        <p className="text-sm font-semibold tracking-[0.08em] text-sage uppercase">
+        <p className="text-sm font-semibold tracking-[0.08em] text-sage-text uppercase">
           {trust.eyebrow}
         </p>
         <h2 className="mt-2 font-display text-balance text-2xl leading-tight tracking-tight text-petrol md:text-3xl">

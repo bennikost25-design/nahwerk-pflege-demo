@@ -21,7 +21,7 @@ export default function NotFound() {
           className="size-10 text-petrol"
           title={siteConfig.name}
         />
-        <p className="mt-8 text-sm font-semibold tracking-[0.1em] text-sage uppercase">
+        <p className="mt-8 text-sm font-semibold tracking-[0.1em] text-sage-text uppercase">
           Seite nicht gefunden
         </p>
         <h1 className="mt-3 max-w-xl font-display text-balance text-[2rem] leading-[1.14] tracking-tight text-petrol min-[380px]:text-4xl md:text-5xl">

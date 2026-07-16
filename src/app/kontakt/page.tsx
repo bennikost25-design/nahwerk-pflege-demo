@@ -12,7 +12,7 @@ export default function KontaktPage() {
     <>
       <section className="border-b border-line bg-surface">
         <div className="container-site section-space">
-          <p className="text-sm font-semibold tracking-[0.08em] text-sage uppercase">
+          <p className="text-sm font-semibold tracking-[0.08em] text-sage-text uppercase">
             Kontakt
           </p>
           <h1 className="mt-3 font-display text-4xl tracking-tight text-petrol md:text-5xl">

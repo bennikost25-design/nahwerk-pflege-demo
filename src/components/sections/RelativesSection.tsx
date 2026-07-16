@@ -10,7 +10,7 @@ export function RelativesSection() {
       <div className="grid gap-10 lg:grid-cols-[1.05fr_0.95fr] lg:gap-14 xl:gap-16 lg:items-start">
         <Reveal>
           <div>
-            <p className="text-sm font-semibold tracking-[0.08em] text-sage uppercase">
+            <p className="text-sm font-semibold tracking-[0.08em] text-sage-text uppercase">
               {eyebrow}
             </p>
             <p className="mt-4 font-display text-balance text-3xl leading-[1.18] tracking-tight text-petrol sm:text-4xl lg:text-[2.65rem]">

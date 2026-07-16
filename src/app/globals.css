@@ -15,6 +15,8 @@
   --color-cream: #f4efe6;
   --color-cream-deep: #ebe4d6;
   --color-sage: #6f8574;
+  /* Lesbarer Sage-Ton für Eyebrows / Labels (AA auf hellen Flächen) */
+  --color-sage-text: #556b5b;
   --color-sage-soft: #e4ebe4;
   --color-terracotta: #b86a4b;
   --color-terracotta-soft: #f3e4dc;
@@ -55,6 +57,7 @@ html[data-theme="dark"] {
   --color-cream: #0f1719;
   --color-cream-deep: #152023;
   --color-sage: #9db39f;
+  --color-sage-text: #9db39f;
   --color-sage-soft: #1a2624;
   --color-terracotta: #d48664;
   --color-terracotta-soft: #2a1f1a;
@@ -85,6 +88,7 @@ html[data-theme="dark"] {
   --color-cream: var(--color-cream);
   --color-cream-deep: var(--color-cream-deep);
   --color-sage: var(--color-sage);
+  --color-sage-text: var(--color-sage-text);
   --color-sage-soft: var(--color-sage-soft);
   --color-terracotta: var(--color-terracotta);
   --color-terracotta-soft: var(--color-terracotta-soft);

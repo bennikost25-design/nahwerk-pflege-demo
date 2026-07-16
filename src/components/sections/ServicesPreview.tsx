@@ -18,7 +18,7 @@ export function ServicesPreview() {
     <Section tone="cream">
       <div className="grid gap-10 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:gap-14 xl:gap-16">
         <div className="max-w-md lg:pt-2">
-          <p className="text-sm font-semibold tracking-[0.08em] text-sage uppercase">
+          <p className="text-sm font-semibold tracking-[0.08em] text-sage-text uppercase">
             {copy.eyebrow}
           </p>
           <h2 className="mt-3 font-display text-balance text-3xl leading-tight tracking-tight text-petrol md:text-4xl">

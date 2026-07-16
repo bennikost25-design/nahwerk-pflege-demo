@@ -8,7 +8,7 @@ const heroAlt =
 function HeroCopy() {
   return (
     <>
-      <p className="text-sm font-semibold tracking-[0.1em] text-sage uppercase">
+      <p className="text-sm font-semibold tracking-[0.1em] text-sage-text uppercase">
         {siteConfig.name}
       </p>
       <h1 className="mt-3 font-display text-balance text-[2rem] leading-[1.14] tracking-tight text-petrol min-[380px]:text-4xl sm:mt-4 sm:text-5xl lg:text-[3.5rem] lg:leading-[1.12] xl:text-[3.625rem]">

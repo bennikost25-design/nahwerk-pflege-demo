@@ -27,7 +27,7 @@ export function FaqSection({
         <div className="grid gap-10 lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)] lg:gap-14 xl:gap-16 lg:items-start">
           <header className="max-w-md">
             {eyebrow ? (
-              <p className="text-sm font-semibold tracking-[0.08em] text-sage uppercase">
+              <p className="text-sm font-semibold tracking-[0.08em] text-sage-text uppercase">
                 {eyebrow}
               </p>
             ) : null}

@@ -143,7 +143,7 @@ export function ContactCta({
     <Section tone="surface">
       <div className="grid gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
         <header className="max-w-2xl">
-          <p className="text-sm font-semibold tracking-[0.08em] text-sage uppercase">
+          <p className="text-sm font-semibold tracking-[0.08em] text-sage-text uppercase">
             Nächster Schritt
           </p>
           <h2 className="mt-3 font-display text-balance text-3xl leading-tight tracking-tight text-petrol md:text-4xl">

@@ -24,7 +24,7 @@ export default function LeistungenPage() {
       <section className="border-b border-line bg-surface">
         <div className="container-site grid gap-10 py-12 md:gap-12 md:py-16 lg:grid-cols-[1.05fr_0.95fr] lg:items-start lg:gap-14 lg:py-20">
           <div className="max-w-xl">
-            <p className="text-sm font-semibold tracking-[0.08em] text-sage uppercase">
+            <p className="text-sm font-semibold tracking-[0.08em] text-sage-text uppercase">
               {copy.hero.eyebrow}
             </p>
             <h1 className="mt-3 font-display text-balance text-[2rem] leading-[1.14] tracking-tight text-petrol min-[380px]:text-4xl md:text-5xl">
@@ -118,7 +118,7 @@ export default function LeistungenPage() {
                     </div>
 
                     <div className="min-w-0">
-                      <h3 className="text-sm font-semibold tracking-wide text-sage uppercase">
+                      <h3 className="text-sm font-semibold tracking-wide text-sage-text uppercase">
                         Dabei unterstützen wir
                       </h3>
                       <ul className="mt-4 space-y-3">
@@ -135,7 +135,7 @@ export default function LeistungenPage() {
                         ))}
                       </ul>
                       <div className="mt-6 border-t border-line pt-5">
-                        <h3 className="text-sm font-semibold tracking-wide text-sage uppercase">
+                        <h3 className="text-sm font-semibold tracking-wide text-sage-text uppercase">
                           Wichtig zu wissen
                         </h3>
                         <p className="mt-2 text-sm leading-relaxed text-ink-muted md:text-base">
@@ -155,7 +155,7 @@ export default function LeistungenPage() {
       <Section tone="surface">
         <div className="grid gap-10 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:gap-14">
           <div className="max-w-md">
-            <p className="text-sm font-semibold tracking-[0.08em] text-sage uppercase">
+            <p className="text-sm font-semibold tracking-[0.08em] text-sage-text uppercase">
               {copy.clarify.eyebrow}
             </p>
             <h2 className="mt-3 font-display text-balance text-3xl leading-tight tracking-tight text-petrol md:text-4xl">
@@ -189,7 +189,7 @@ export default function LeistungenPage() {
       <Section tone="sage">
         <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:gap-14 lg:items-start">
           <div className="max-w-md">
-            <p className="text-sm font-semibold tracking-[0.08em] text-sage uppercase">
+            <p className="text-sm font-semibold tracking-[0.08em] text-sage-text uppercase">
               {copy.counseling.eyebrow}
             </p>
             <h2 className="mt-3 font-display text-balance text-3xl leading-tight tracking-tight text-petrol md:text-4xl">
