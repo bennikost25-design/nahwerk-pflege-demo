@@ -14,10 +14,12 @@ type ThemeState = {
   resolved: ResolvedTheme;
 };
 
-let state: ThemeState = {
+const SERVER_THEME_STATE: ThemeState = {
   preference: "system",
   resolved: "light",
 };
+
+let state: ThemeState = SERVER_THEME_STATE;
 
 const listeners = new Set<() => void>();
 
@@ -30,7 +32,7 @@ export function getThemeState(): ThemeState {
 }
 
 export function getServerThemeState(): ThemeState {
-  return { preference: "system", resolved: "light" };
+  return SERVER_THEME_STATE;
 }
 
 export function subscribeTheme(listener: () => void) {
@@ -51,14 +53,25 @@ export function hydrateThemeStore() {
       ? resolvedAttr
       : resolveTheme(preference);
 
+  if (state.preference === preference && state.resolved === resolved) {
+    applyThemePreference(preference);
+    return;
+  }
+
   state = { preference, resolved };
   applyThemePreference(preference);
   emit();
 }
 
 export function setThemePreference(preference: ThemePreference) {
-  storeThemePreference(preference);
   const resolved = resolveTheme(preference);
+  if (state.preference === preference && state.resolved === resolved) {
+    storeThemePreference(preference);
+    applyThemePreference(preference);
+    return;
+  }
+
+  storeThemePreference(preference);
   state = { preference, resolved };
   applyThemePreference(preference);
   emit();
@@ -71,6 +84,7 @@ export function bindSystemThemeListener() {
   const onChange = () => {
     if (state.preference !== "system") return;
     const resolved = getSystemTheme();
+    if (state.resolved === resolved) return;
     state = { ...state, resolved };
     applyThemePreference("system");
     emit();

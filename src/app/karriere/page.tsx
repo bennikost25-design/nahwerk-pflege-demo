@@ -44,7 +44,12 @@ export default function KarrierePage() {
               {copy.hero.description}
             </p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
-              <Button href="#bewerbung" variant="terracotta" size="lg">
+              <Button
+                href="#bewerbung"
+                variant="terracotta"
+                size="lg"
+                className="text-on-brand hover:text-on-brand"
+              >
                 In 60 Sekunden bewerben
               </Button>
               <Button
@@ -249,16 +254,23 @@ export default function KarrierePage() {
           </p>
         </header>
 
-        <div className="relative mt-10 md:mt-12">
-          <div
-            className="pointer-events-none absolute top-4 right-[12%] left-[12%] hidden h-px bg-petrol/20 md:block"
-            aria-hidden
-          />
+        <div className="mt-10 md:mt-12">
+          <div className="relative mb-4 hidden h-2.5 md:block" aria-hidden>
+            <div className="absolute top-1/2 right-0 left-0 z-0 h-px -translate-y-1/2 bg-petrol/20" />
+            <div className="relative z-[1] grid h-full grid-cols-3 gap-8">
+              {workdayHighlights.map((item) => (
+                <div key={item.title} className="flex items-center">
+                  <span className="size-2.5 rounded-full bg-petrol" />
+                </div>
+              ))}
+            </div>
+          </div>
+
           <ol className="grid gap-0 md:grid-cols-3 md:gap-8">
             {workdayHighlights.map((item, index) => (
               <li key={item.title} className="relative">
                 <Reveal delayMs={index * 60}>
-                  <div className="flex gap-4 md:flex-col">
+                  <div className="flex gap-4 md:block">
                     {index < workdayHighlights.length - 1 ? (
                       <span
                         className="absolute top-9 bottom-0 left-3 w-px bg-petrol/20 md:hidden"
@@ -266,7 +278,7 @@ export default function KarrierePage() {
                       />
                     ) : null}
                     <span
-                      className="relative z-[1] mt-1 size-2.5 shrink-0 rounded-full bg-petrol md:mt-0 md:mb-4"
+                      className="relative z-[1] mt-1 size-2.5 shrink-0 rounded-full bg-petrol md:hidden"
                       aria-hidden
                     />
                     <div className="min-w-0 pb-8 md:pb-0">
@@ -299,16 +311,25 @@ export default function KarrierePage() {
           </p>
         </header>
 
-        <div className="relative mt-10 md:mt-12">
-          <div
-            className="pointer-events-none absolute top-5 right-[16%] left-[16%] hidden h-px bg-petrol/20 md:block"
-            aria-hidden
-          />
+        <div className="mt-10 md:mt-12">
+          <div className="relative mb-4 hidden h-10 md:block" aria-hidden>
+            <div className="absolute top-1/2 right-0 left-0 z-0 h-px -translate-y-1/2 bg-petrol/20" />
+            <div className="relative z-[1] grid h-full grid-cols-3 gap-8">
+              {applicationSteps.map((step) => (
+                <div key={step.step} className="flex items-center">
+                  <div className="flex size-10 items-center justify-center rounded-full border border-petrol/25 bg-cream font-display text-base font-semibold text-petrol">
+                    {step.step}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
           <ol className="grid gap-0 md:grid-cols-3 md:gap-8">
             {applicationSteps.map((step, index) => (
               <li key={step.step} className="relative">
                 <Reveal delayMs={index * 55}>
-                  <div className="flex gap-4 md:flex-col">
+                  <div className="flex gap-4 md:block">
                     {index < applicationSteps.length - 1 ? (
                       <span
                         className="absolute top-10 bottom-0 left-[0.9rem] w-px bg-petrol/20 md:hidden"
@@ -316,7 +337,7 @@ export default function KarrierePage() {
                       />
                     ) : null}
                     <div
-                      className="relative z-[1] flex size-8 shrink-0 items-center justify-center rounded-full border border-petrol/25 bg-surface font-display text-sm font-semibold text-petrol md:mb-4 md:size-10"
+                      className="relative z-[1] flex size-8 shrink-0 items-center justify-center rounded-full border border-petrol/25 bg-surface font-display text-sm font-semibold text-petrol md:hidden"
                       aria-hidden
                     >
                       {step.step}
