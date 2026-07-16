@@ -5,6 +5,7 @@ import { Reveal } from "@/components/ui/Reveal";
 import { Section } from "@/components/ui/Section";
 import { cn } from "@/lib/utils";
 import {
+  contact,
   faqServices,
   services,
   servicesPage,
@@ -246,8 +247,8 @@ export default function LeistungenPage() {
           phoneNote: copy.cta.phoneNote,
           primaryHref: "/kontakt",
           primaryLabel: "Erstgespräch anfragen",
-          secondaryHref: "/kontakt",
-          secondaryLabel: "Zur Kontaktseite",
+          secondaryHref: contact.phoneHref,
+          secondaryLabel: "Direkt anrufen",
           showEmail: false,
           showHours: false,
         }}

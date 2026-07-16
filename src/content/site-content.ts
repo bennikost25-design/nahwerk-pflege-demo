@@ -343,7 +343,7 @@ export const jobs = [
   },
   {
     id: "hauswirtschaft",
-    title: "Mitarbeiter im Bereich Hauswirtschaft",
+    title: "Hauswirtschaftskraft",
     roleKey: "Hauswirtschaft",
     description:
       "Sie entlasten Haushalte bei praktischen Aufgaben und arbeiten eng mit dem Pflegeteam zusammen.",
@@ -352,7 +352,7 @@ export const jobs = [
       "Sicherheit bei hauswirtschaftlichen Tätigkeiten",
       "Freundlicher, diskreter Umgang in fremden Wohnungen",
       "Selbstständige Arbeitsweise nach Absprache",
-      "Gute Erreichbarkeit im Stadtgebiet Erfurt",
+      "Bereitschaft zu Einsätzen im Stadtgebiet Erfurt",
     ],
   },
 ] as const;
@@ -511,7 +511,7 @@ export const faqHome = [
   {
     question: "Wer übernimmt die Kosten?",
     answer:
-      "Das hängt von Pflegegrad, ärztlichen Verordnungen und individuellen Ansprüchen ab. In einem echten Beratungsgespräch würde man Ori­en­tie­rung geben; verbindliche Auskünfte zu Kosten oder Ansprüchen ersetzen wir hier bewusst nicht.",
+      "Das hängt vom Pflegegrad, von ärztlichen Verordnungen und von den individuellen Ansprüchen ab. In einem echten Beratungsgespräch erhalten Sie eine erste Orientierung. Verbindliche Auskünfte zu Kosten und Ansprüchen geben die jeweils zuständigen Stellen.",
   },
   {
     question: "Können Angehörige mit einbezogen werden?",

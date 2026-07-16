@@ -3,7 +3,7 @@
 import { Button } from "@/components/ui/Button";
 import { cn } from "@/lib/utils";
 import { CheckCircle2 } from "lucide-react";
-import { FormEvent, useId, useState } from "react";
+import { FormEvent, useEffect, useId, useRef, useState } from "react";
 
 type FormState = {
   name: string;
@@ -14,6 +14,7 @@ type FormState = {
 };
 
 type FormErrors = Partial<Record<keyof FormState, string>>;
+type FocusTarget = "success" | "first-field" | null;
 
 const initial: FormState = {
   name: "",
@@ -32,28 +33,33 @@ const topics = [
 
 function validate(values: FormState): FormErrors {
   const errors: FormErrors = {};
-  if (!values.name.trim()) errors.name = "Bitte Ihren Namen angeben.";
+  if (!values.name.trim()) {
+    errors.name = "Bitte geben Sie Ihren Namen an.";
+  }
   if (!values.contact.trim()) {
-    errors.contact = "Bitte Telefonnummer oder E-Mail angeben.";
+    errors.contact = "Bitte geben Sie Ihre Telefonnummer oder E-Mail an.";
   } else {
     const value = values.contact.trim();
     const looksEmail = value.includes("@");
     const looksPhone = /^[+0-9\s()/.-]{6,}$/.test(value);
     if (looksEmail) {
       if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
-        errors.contact = "Bitte eine gültige E-Mail-Adresse eingeben.";
+        errors.contact = "Bitte geben Sie eine gültige E-Mail-Adresse an.";
       }
     } else if (!looksPhone) {
       errors.contact =
-        "Bitte eine gültige Telefonnummer oder E-Mail-Adresse eingeben.";
+        "Bitte geben Sie eine gültige Telefonnummer oder E-Mail-Adresse an.";
     }
   }
-  if (!values.topic) errors.topic = "Bitte ein Thema auswählen.";
+  if (!values.topic) {
+    errors.topic = "Bitte wählen Sie ein Thema aus.";
+  }
   if (!values.message.trim() || values.message.trim().length < 10) {
-    errors.message = "Bitte beschreiben Sie Ihr Anliegen in mindestens 10 Zeichen.";
+    errors.message =
+      "Bitte geben Sie eine Nachricht mit mindestens 10 Zeichen an.";
   }
   if (!values.privacy) {
-    errors.privacy = "Bitte den Datenschutzhinweis bestätigen.";
+    errors.privacy = "Bitte bestätigen Sie den Datenschutzhinweis.";
   }
   return errors;
 }
@@ -74,6 +80,21 @@ export function ContactForm() {
   const [values, setValues] = useState<FormState>(initial);
   const [errors, setErrors] = useState<FormErrors>({});
   const [submitted, setSubmitted] = useState(false);
+  const successRef = useRef<HTMLDivElement>(null);
+  const focusTargetRef = useRef<FocusTarget>(null);
+
+  useEffect(() => {
+    const target = focusTargetRef.current;
+    if (!target) return;
+    focusTargetRef.current = null;
+
+    if (target === "success") {
+      successRef.current?.focus();
+      return;
+    }
+
+    document.getElementById(`${formId}-name`)?.focus();
+  }, [submitted, formId]);
 
   function update<K extends keyof FormState>(key: K, value: FormState[K]) {
     setValues((prev) => ({ ...prev, [key]: value }));
@@ -96,13 +117,23 @@ export function ContactForm() {
       }
       return;
     }
+    focusTargetRef.current = "success";
     setSubmitted(true);
+  }
+
+  function resetForm() {
+    focusTargetRef.current = "first-field";
+    setValues(initial);
+    setErrors({});
+    setSubmitted(false);
   }
 
   if (submitted) {
     return (
       <div
-        className="border border-sage/30 bg-sage-soft/60 p-6"
+        ref={successRef}
+        tabIndex={-1}
+        className="border border-sage/30 bg-sage-soft/60 p-6 focus:outline-none"
         role="status"
         aria-live="polite"
       >
@@ -117,15 +148,7 @@ export function ContactForm() {
               </strong>
               . Ein realer Pflegedienst würde sich hier zurückmelden.
             </p>
-            <Button
-              className="mt-5"
-              variant="secondary"
-              onClick={() => {
-                setValues(initial);
-                setErrors({});
-                setSubmitted(false);
-              }}
-            >
+            <Button className="mt-5" variant="secondary" onClick={resetForm}>
               Neue Demo-Nachricht
             </Button>
           </div>
@@ -152,10 +175,12 @@ export function ContactForm() {
         <input
           id={`${formId}-name`}
           name="name"
+          type="text"
           className={cn(fieldClass, errors.name && "border-terracotta")}
           value={values.name}
           onChange={(e) => update("name", e.target.value)}
           autoComplete="name"
+          required
           aria-required="true"
           aria-invalid={Boolean(errors.name) || undefined}
           aria-describedby={errors.name ? `${formId}-name-error` : undefined}
@@ -174,10 +199,14 @@ export function ContactForm() {
         <input
           id={`${formId}-contact`}
           name="contact"
+          type="text"
           className={cn(fieldClass, errors.contact && "border-terracotta")}
           value={values.contact}
           onChange={(e) => update("contact", e.target.value)}
-          autoComplete="email"
+          autoComplete="off"
+          autoCapitalize="none"
+          spellCheck={false}
+          required
           aria-required="true"
           aria-invalid={Boolean(errors.contact) || undefined}
           aria-describedby={
@@ -205,6 +234,7 @@ export function ContactForm() {
           className={cn(fieldClass, errors.topic && "border-terracotta")}
           value={values.topic}
           onChange={(e) => update("topic", e.target.value)}
+          required
           aria-required="true"
           aria-invalid={Boolean(errors.topic) || undefined}
           aria-describedby={errors.topic ? `${formId}-topic-error` : undefined}
@@ -234,6 +264,7 @@ export function ContactForm() {
           className={cn(fieldClass, "min-h-32", errors.message && "border-terracotta")}
           value={values.message}
           onChange={(e) => update("message", e.target.value)}
+          required
           aria-required="true"
           aria-invalid={Boolean(errors.message) || undefined}
           aria-describedby={
@@ -263,6 +294,7 @@ export function ContactForm() {
             className="mt-1 size-4 accent-petrol"
             checked={values.privacy}
             onChange={(e) => update("privacy", e.target.checked)}
+            required
             aria-required="true"
             aria-invalid={Boolean(errors.privacy) || undefined}
             aria-describedby={

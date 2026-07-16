@@ -88,6 +88,7 @@ export function HeroSection() {
               src="/images/hero-care-scene.png"
               alt={heroAlt}
               fill
+              loading="lazy"
               sizes="52vw"
               className="object-cover object-center"
             />

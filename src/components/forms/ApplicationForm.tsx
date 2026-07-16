@@ -16,6 +16,7 @@ import {
   FormEvent,
   useEffect,
   useId,
+  useRef,
   useState,
   type ReactNode,
 } from "react";
@@ -32,6 +33,7 @@ type FormState = {
 };
 
 type FormErrors = Partial<Record<keyof FormState, string>>;
+type FocusTarget = "success" | "first-field" | null;
 
 const initial: FormState = {
   firstName: "",
@@ -54,32 +56,31 @@ function validate(values: FormState): FormErrors {
     errors.lastName = "Bitte geben Sie Ihren Nachnamen an.";
   }
   if (!values.contact.trim()) {
-    errors.contact = "Bitte Telefonnummer oder E-Mail angeben.";
+    errors.contact = "Bitte geben Sie Ihre Telefonnummer oder E-Mail an.";
   } else {
     const value = values.contact.trim();
     const looksEmail = value.includes("@");
     const looksPhone = /^[+0-9\s()/.-]{6,}$/.test(value);
     if (looksEmail) {
       if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
-        errors.contact = "Bitte eine gültige E-Mail-Adresse eingeben.";
+        errors.contact = "Bitte geben Sie eine gültige E-Mail-Adresse an.";
       }
     } else if (!looksPhone) {
       errors.contact =
-        "Bitte eine gültige Telefonnummer oder E-Mail-Adresse eingeben.";
+        "Bitte geben Sie eine gültige Telefonnummer oder E-Mail-Adresse an.";
     }
   }
   if (!values.role) {
-    errors.role = "Bitte eine Tätigkeit auswählen.";
+    errors.role = "Bitte wählen Sie eine Tätigkeit aus.";
   }
   if (!values.hours) {
-    errors.hours = "Bitte einen Stundenumfang auswählen.";
+    errors.hours = "Bitte wählen Sie einen Stundenumfang aus.";
   }
   if (!values.preference) {
-    errors.preference = "Bitte angeben, wie Sie kontaktiert werden möchten.";
+    errors.preference = "Bitte wählen Sie eine Kontaktart aus.";
   }
   if (!values.privacy) {
-    errors.privacy =
-      "Bitte bestätigen Sie den Datenschutzhinweis, um fortzufahren.";
+    errors.privacy = "Bitte bestätigen Sie den Datenschutzhinweis.";
   }
 
   return errors;
@@ -125,6 +126,8 @@ export function ApplicationForm() {
   const [values, setValues] = useState<FormState>(initial);
   const [errors, setErrors] = useState<FormErrors>({});
   const [submitted, setSubmitted] = useState(false);
+  const successRef = useRef<HTMLDivElement>(null);
+  const focusTargetRef = useRef<FocusTarget>(null);
 
   useEffect(() => {
     function onSelectRole(event: Event) {
@@ -150,6 +153,19 @@ export function ApplicationForm() {
     return () => window.removeEventListener(CAREER_ROLE_EVENT, onSelectRole);
   }, [formId]);
 
+  useEffect(() => {
+    const target = focusTargetRef.current;
+    if (!target) return;
+    focusTargetRef.current = null;
+
+    if (target === "success") {
+      successRef.current?.focus();
+      return;
+    }
+
+    document.getElementById(`${formId}-firstName`)?.focus();
+  }, [submitted, formId]);
+
   function update<K extends keyof FormState>(key: K, value: FormState[K]) {
     setValues((prev) => ({ ...prev, [key]: value }));
     setErrors((prev) => {
@@ -168,13 +184,23 @@ export function ApplicationForm() {
       focusFirstInvalidField(formId, nextErrors);
       return;
     }
+    focusTargetRef.current = "success";
     setSubmitted(true);
+  }
+
+  function resetForm() {
+    focusTargetRef.current = "first-field";
+    setValues(initial);
+    setErrors({});
+    setSubmitted(false);
   }
 
   if (submitted) {
     return (
       <div
-        className="border-t-2 border-sage bg-sage-soft/50 px-5 py-7 md:px-8 md:py-8"
+        ref={successRef}
+        tabIndex={-1}
+        className="border-t-2 border-sage bg-sage-soft/50 px-5 py-7 focus:outline-none md:px-8 md:py-8"
         role="status"
         aria-live="polite"
       >
@@ -185,7 +211,7 @@ export function ApplicationForm() {
           />
           <div>
             <h3 className="font-display text-2xl text-petrol">
-              Demo-Bewerbung erfasst
+              Demo-Bewerbung abgeschlossen
             </h3>
             <p className="mt-3 leading-relaxed text-ink-muted">
               Vielen Dank. In dieser Demonstration wurden{" "}
@@ -194,15 +220,7 @@ export function ApplicationForm() {
               </strong>
               . Das Formular zeigt ausschließlich einen lokalen Erfolgszustand.
             </p>
-            <Button
-              className="mt-6"
-              variant="secondary"
-              onClick={() => {
-                setValues(initial);
-                setErrors({});
-                setSubmitted(false);
-              }}
-            >
+            <Button className="mt-6" variant="secondary" onClick={resetForm}>
               Formular zurücksetzen
             </Button>
           </div>
@@ -235,10 +253,12 @@ export function ApplicationForm() {
               id={`${formId}-firstName`}
               name="firstName"
               autoComplete="given-name"
+              required
+              aria-required="true"
               className={cn(fieldClass, errors.firstName && "border-terracotta")}
               value={values.firstName}
               onChange={(e) => update("firstName", e.target.value)}
-              aria-invalid={Boolean(errors.firstName)}
+              aria-invalid={Boolean(errors.firstName) || undefined}
               aria-describedby={
                 errors.firstName ? `${formId}-firstName-error` : undefined
               }
@@ -253,10 +273,12 @@ export function ApplicationForm() {
               id={`${formId}-lastName`}
               name="lastName"
               autoComplete="family-name"
+              required
+              aria-required="true"
               className={cn(fieldClass, errors.lastName && "border-terracotta")}
               value={values.lastName}
               onChange={(e) => update("lastName", e.target.value)}
-              aria-invalid={Boolean(errors.lastName)}
+              aria-invalid={Boolean(errors.lastName) || undefined}
               aria-describedby={
                 errors.lastName ? `${formId}-lastName-error` : undefined
               }
@@ -272,11 +294,16 @@ export function ApplicationForm() {
           <input
             id={`${formId}-contact`}
             name="contact"
-            autoComplete="email"
+            type="text"
+            autoComplete="off"
+            autoCapitalize="none"
+            spellCheck={false}
+            required
+            aria-required="true"
             className={cn(fieldClass, errors.contact && "border-terracotta")}
             value={values.contact}
             onChange={(e) => update("contact", e.target.value)}
-            aria-invalid={Boolean(errors.contact)}
+            aria-invalid={Boolean(errors.contact) || undefined}
             aria-describedby={
               errors.contact ? `${formId}-contact-error` : undefined
             }
@@ -297,10 +324,12 @@ export function ApplicationForm() {
             <select
               id={`${formId}-role`}
               name="role"
+              required
+              aria-required="true"
               className={cn(fieldClass, errors.role && "border-terracotta")}
               value={values.role}
               onChange={(e) => update("role", e.target.value)}
-              aria-invalid={Boolean(errors.role)}
+              aria-invalid={Boolean(errors.role) || undefined}
               aria-describedby={errors.role ? `${formId}-role-error` : undefined}
             >
               <option value="">Bitte auswählen</option>
@@ -319,10 +348,12 @@ export function ApplicationForm() {
             <select
               id={`${formId}-hours`}
               name="hours"
+              required
+              aria-required="true"
               className={cn(fieldClass, errors.hours && "border-terracotta")}
               value={values.hours}
               onChange={(e) => update("hours", e.target.value)}
-              aria-invalid={Boolean(errors.hours)}
+              aria-invalid={Boolean(errors.hours) || undefined}
               aria-describedby={
                 errors.hours ? `${formId}-hours-error` : undefined
               }
@@ -340,6 +371,7 @@ export function ApplicationForm() {
 
       <fieldset
         className="border-t border-line pt-6"
+        aria-required="true"
         aria-invalid={Boolean(errors.preference) || undefined}
         aria-describedby={
           errors.preference ? `${formId}-preference-error` : undefined
@@ -367,6 +399,7 @@ export function ApplicationForm() {
                   type="radio"
                   name="preference"
                   value={option}
+                  required
                   checked={values.preference === option}
                   onChange={() => update("preference", option)}
                   className="size-4 accent-petrol"
@@ -411,6 +444,7 @@ export function ApplicationForm() {
           <input
             id={`${formId}-privacy`}
             type="checkbox"
+            required
             className="mt-1 size-4 accent-petrol"
             checked={values.privacy}
             onChange={(e) => update("privacy", e.target.checked)}

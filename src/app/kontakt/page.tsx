@@ -12,7 +12,10 @@ export default function KontaktPage() {
     <>
       <section className="border-b border-line bg-surface">
         <div className="container-site section-space">
-          <h1 className="font-display text-4xl tracking-tight text-petrol md:text-5xl">
+          <p className="text-sm font-semibold tracking-[0.08em] text-sage uppercase">
+            Kontakt
+          </p>
+          <h1 className="mt-3 font-display text-4xl tracking-tight text-petrol md:text-5xl">
             Kontakt aufnehmen
           </h1>
           <p className="mt-5 max-w-2xl text-lg leading-relaxed text-ink-muted">
@@ -98,21 +101,21 @@ export default function KontaktPage() {
 
       <Section tone="sage">
         <SectionHeader
-          title="Standort (Platzhalter)"
-          description="Visueller Kartensatz ohne externe Karten-Dienste. Keine Google-Maps-Einbindung."
+          title="Standort und Versorgungsgebiet"
+          description="In dieser Demo ist keine externe Karte eingebunden. Der Bereich zeigt beispielhaft, wie Standort und Versorgungsgebiet dargestellt werden könnten."
         />
         <div
           className="map-pattern mt-8 flex min-h-64 items-center justify-center border border-line"
           role="img"
-          aria-label="Kartensatzhalter für Erfurt – keine echte Karte eingebunden"
+          aria-label="Kartenplatzhalter für den Standort Erfurt"
         >
           <div className="mx-4 max-w-md bg-cream/95 p-5 text-center shadow-[var(--shadow-soft)]">
             <p className="font-display text-xl text-petrol">
               Erfurt · Musterstraße 12
             </p>
             <p className="mt-2 text-sm text-ink-muted">
-              Hier würde in einer Live-Website eine lokale Karte oder eine
-              Adressskizze stehen.
+              Auf einer echten Website könnte hier eine datenschutzfreundliche
+              Karte oder eine einfache Anfahrtsskizze erscheinen.
             </p>
           </div>
         </div>

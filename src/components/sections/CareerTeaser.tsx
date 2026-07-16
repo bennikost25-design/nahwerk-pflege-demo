@@ -39,24 +39,26 @@ export function CareerTeaser() {
 
         <ul className="border-t border-on-brand/20">
           {employerPromises.map((item, index) => (
-            <Reveal key={item.title} delayMs={index * 55}>
-              <li className="grid grid-cols-[auto_1fr] gap-4 border-b border-on-brand/20 py-5">
-                <span
-                  className="font-display text-lg text-on-brand/35 tabular-nums"
-                  aria-hidden
-                >
-                  {String(index + 1).padStart(2, "0")}
-                </span>
-                <div>
-                  <h3 className="font-display text-lg text-on-brand md:text-xl">
-                    {item.title}
-                  </h3>
-                  <p className="mt-1.5 text-sm leading-relaxed text-on-brand/75">
-                    {item.description}
-                  </p>
+            <li key={item.title} className="border-b border-on-brand/20">
+              <Reveal delayMs={index * 55}>
+                <div className="grid grid-cols-[auto_1fr] gap-4 py-5">
+                  <span
+                    className="font-display text-lg text-on-brand/35 tabular-nums"
+                    aria-hidden
+                  >
+                    {String(index + 1).padStart(2, "0")}
+                  </span>
+                  <div>
+                    <h3 className="font-display text-lg text-on-brand md:text-xl">
+                      {item.title}
+                    </h3>
+                    <p className="mt-1.5 text-sm leading-relaxed text-on-brand/75">
+                      {item.description}
+                    </p>
+                  </div>
                 </div>
-              </li>
-            </Reveal>
+              </Reveal>
+            </li>
           ))}
         </ul>
       </div>
