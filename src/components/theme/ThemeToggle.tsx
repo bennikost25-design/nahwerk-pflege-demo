@@ -39,7 +39,7 @@ export function ThemeToggle({
         type="button"
         onClick={cyclePreference}
         className={cn(
-          "inline-flex size-10 items-center justify-center rounded-[var(--radius-sm)] border border-line text-petrol transition-colors hover:bg-surface",
+          "inline-flex size-10 items-center justify-center rounded-[var(--radius-sm)] text-petrol transition-colors hover:bg-surface",
           className,
         )}
         aria-label={`Darstellung: ${themeLabels[preference]}. Nächster Modus: ${themeLabels[next]}`}
@@ -54,7 +54,7 @@ export function ThemeToggle({
       role="radiogroup"
       aria-label="Darstellung wählen"
       className={cn(
-        "inline-flex items-center rounded-full border border-line bg-surface/80 p-0.5",
+        "inline-flex items-center rounded-full border border-line/70 bg-surface/50 p-0.5",
         className,
       )}
       onKeyDown={(event) => {

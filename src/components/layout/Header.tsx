@@ -2,10 +2,9 @@
 
 import { BrandMark } from "@/components/brand/BrandMark";
 import { ThemeMenuControl, ThemeToggle } from "@/components/theme/ThemeToggle";
-import { Button } from "@/components/ui/Button";
 import { cta, navigation, siteConfig } from "@/content/site-content";
 import { cn } from "@/lib/utils";
-import { Menu, X } from "lucide-react";
+import { ArrowUpRight, Menu, X } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEscapeKey } from "@/hooks/useEscapeKey";
@@ -25,6 +24,7 @@ export function Header() {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
   const [openedOnPath, setOpenedOnPath] = useState(pathname);
+  const [reduceMotion, setReduceMotion] = useState(false);
   const menuId = useId();
   const buttonRef = useRef<HTMLButtonElement>(null);
   const panelRef = useRef<HTMLDivElement>(null);
@@ -43,6 +43,14 @@ export function Header() {
   useEscapeKey(isOpen, closeMenu);
 
   useEffect(() => {
+    const media = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const sync = () => setReduceMotion(media.matches);
+    sync();
+    media.addEventListener("change", sync);
+    return () => media.removeEventListener("change", sync);
+  }, []);
+
+  useEffect(() => {
     if (!isOpen) return;
 
     const previousOverflow = document.body.style.overflow;
@@ -56,10 +64,9 @@ export function Header() {
         panel.querySelectorAll<HTMLElement>(
           'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])',
         ),
-      ).filter((el) => !el.hasAttribute("disabled") && el.offsetParent !== null);
+      ).filter((el) => el.offsetParent !== null);
 
-    const focusable = getFocusable();
-    focusable[0]?.focus();
+    getFocusable()[0]?.focus();
 
     const onKeyDown = (event: KeyboardEvent) => {
       if (event.key !== "Tab") return;
@@ -88,79 +95,97 @@ export function Header() {
   }, [isOpen]);
 
   return (
-    <header className="sticky top-0 z-50 border-b border-line/80 bg-cream/92 backdrop-blur-md">
-      <div className="container-site flex h-14 items-center justify-between gap-3 lg:h-[4.5rem]">
+    <header className="site-header sticky top-0 z-50 bg-cream/85 backdrop-blur-md">
+      <div className="container-site relative flex h-14 items-center gap-2 lg:h-[4.5rem] lg:gap-6 xl:gap-10">
+        {/* Marke */}
         <Link
           href="/"
-          className="group flex min-w-0 items-center gap-2.5 py-1"
+          className="flex min-w-0 flex-1 items-center gap-2 py-1 lg:flex-none lg:gap-2.5"
           aria-label={`${siteConfig.name} – Startseite`}
         >
-          <BrandMark className="size-7 shrink-0 text-brand lg:size-8" />
+          <BrandMark className="size-[1.65rem] shrink-0 text-petrol lg:size-8" />
           <span className="min-w-0">
-            <span className="flex items-center gap-2">
-              <span className="font-display text-[1.05rem] leading-none text-petrol lg:text-[1.25rem]">
+            <span className="flex items-baseline gap-1.5">
+              <span className="block truncate font-display text-[1.02rem] leading-none text-petrol lg:text-[1.28rem]">
                 {siteConfig.name}
               </span>
               <span
-                className="rounded-[var(--radius-sm)] border border-terracotta/30 bg-terracotta-soft px-1.5 py-0.5 text-[0.65rem] font-semibold tracking-wide text-ink uppercase"
+                className="relative -top-1 hidden text-[0.62rem] font-semibold tracking-wide text-terracotta/80 uppercase lg:inline"
                 title={siteConfig.demoNotice}
               >
                 Demo
               </span>
             </span>
-            <span className="mt-0.5 hidden truncate text-xs text-ink-muted lg:block">
+            <span className="mt-1 hidden text-[0.72rem] leading-tight text-ink-muted lg:block">
               {siteConfig.tagline}
+              <span className="text-ink-muted/70"> · Fiktive Demo</span>
             </span>
           </span>
         </Link>
 
+        {/* Desktop-Navigation */}
         <nav
-          className="hidden items-center gap-1 lg:flex"
+          className="hidden min-w-0 flex-1 justify-center lg:flex"
           aria-label="Hauptnavigation"
         >
-          {navigation.map((item) => {
-            const active = isActivePath(pathname, item.href);
-            return (
-              <Link
-                key={item.href}
-                href={item.href}
-                className={cn(
-                  "group relative inline-flex min-h-11 items-center px-3 py-2 text-sm font-medium transition-colors",
-                  active
-                    ? "text-petrol"
-                    : "text-ink-muted hover:text-petrol",
-                )}
-                aria-current={active ? "page" : undefined}
-              >
-                {item.label}
-                <span
-                  className={cn(
-                    "absolute inset-x-3 bottom-1.5 h-0.5 rounded-full bg-terracotta transition-opacity",
-                    active
-                      ? "opacity-100"
-                      : "opacity-0 group-hover:opacity-50",
-                  )}
-                  aria-hidden
-                />
-              </Link>
-            );
-          })}
+          <ul className="flex items-center gap-0.5 xl:gap-1.5">
+            {navigation.map((item, index) => {
+              const active = isActivePath(pathname, item.href);
+              return (
+                <li key={item.href}>
+                  <Link
+                    href={item.href}
+                    className={cn(
+                      "group relative inline-flex min-h-11 items-baseline gap-1.5 px-2.5 py-2 transition-colors xl:px-3",
+                      active ? "text-petrol" : "text-ink-muted hover:text-petrol",
+                    )}
+                    aria-current={active ? "page" : undefined}
+                  >
+                    <span
+                      className="font-display text-[0.65rem] tabular-nums text-petrol/35"
+                      aria-hidden
+                    >
+                      {String(index + 1).padStart(2, "0")}
+                    </span>
+                    <span className="text-sm font-medium tracking-wide">
+                      {item.label}
+                    </span>
+                    <span
+                      className={cn(
+                        "absolute inset-x-2.5 -bottom-0.5 h-px origin-left bg-terracotta transition-[transform,opacity] duration-200 xl:inset-x-3",
+                        active
+                          ? "scale-x-100 opacity-100"
+                          : "scale-x-0 opacity-0 group-hover:scale-x-100 group-hover:opacity-70",
+                      )}
+                      aria-hidden
+                    />
+                  </Link>
+                </li>
+              );
+            })}
+          </ul>
         </nav>
 
-        <div className="flex shrink-0 items-center gap-2">
+        {/* Rechts: Theme + CTA / Menü */}
+        <div className="flex shrink-0 items-center gap-1.5 sm:gap-2">
           <ThemeToggle className="hidden lg:inline-flex" />
           <ThemeToggle variant="cycle" className="lg:hidden" />
-          <Button
+
+          <Link
             href={cta.primary.href}
-            className="hidden min-h-10 px-4 text-sm lg:inline-flex"
+            className="group hidden items-center gap-1.5 rounded-[0.2rem_0.65rem_0.2rem_0.65rem] bg-terracotta px-3.5 py-2 text-sm font-semibold tracking-wide text-on-brand transition-colors hover:bg-[#a55c41] lg:inline-flex"
           >
             {cta.primary.shortLabel}
-          </Button>
+            <ArrowUpRight
+              className="size-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+              aria-hidden
+            />
+          </Link>
 
           <button
             ref={buttonRef}
             type="button"
-            className="inline-flex size-10 items-center justify-center rounded-[var(--radius-sm)] border border-line text-petrol lg:hidden"
+            className="inline-flex size-10 shrink-0 items-center justify-center rounded-[var(--radius-sm)] text-petrol transition-colors hover:bg-surface lg:hidden"
             aria-expanded={isOpen}
             aria-controls={menuId}
             aria-label={isOpen ? "Menü schließen" : "Menü öffnen"}
@@ -176,30 +201,50 @@ export function Header() {
             )}
           </button>
         </div>
+
+        {/* Kurze Akzentlinie unter dem Markenbereich – kein Vollkasten */}
+        <span
+          className="pointer-events-none absolute bottom-0 left-0 hidden h-0.5 w-14 bg-terracotta/70 lg:block"
+          aria-hidden
+        />
       </div>
 
+      {/* Feine Trennlinie – nicht kantenhart über volle Breite */}
       <div
-        className={cn(
-          "fixed inset-0 top-[var(--header-offset)] z-40 bg-brand/40 transition-opacity lg:hidden",
-          isOpen ? "opacity-100" : "pointer-events-none opacity-0",
-        )}
-        aria-hidden={!isOpen}
-        onClick={closeMenu}
+        className="pointer-events-none mx-auto h-px w-[min(1120px,calc(100%-2rem))] bg-gradient-to-r from-transparent via-line/70 to-transparent"
+        aria-hidden
       />
 
+      {/* Mobile Viewport-Panel */}
       <div
         ref={panelRef}
         id={menuId}
+        role="dialog"
+        aria-modal="true"
+        aria-label="Navigation"
+        aria-hidden={!isOpen}
+        inert={!isOpen ? true : undefined}
         className={cn(
-          "absolute inset-x-0 top-full z-50 border-b border-line bg-cream shadow-[var(--shadow-soft)] transition-[opacity,transform] duration-200 lg:hidden",
-          isOpen
-            ? "translate-y-0 opacity-100"
-            : "pointer-events-none -translate-y-1 opacity-0",
+          "fixed inset-x-0 top-[var(--header-offset)] bottom-0 z-50 overflow-y-auto overscroll-contain bg-cream lg:hidden",
+          "pb-[max(1.25rem,env(safe-area-inset-bottom))]",
+          reduceMotion
+            ? isOpen
+              ? "visible opacity-100"
+              : "invisible opacity-0"
+            : cn(
+                "transition-[opacity,transform] duration-[200ms] ease-out",
+                isOpen
+                  ? "visible translate-y-0 opacity-100"
+                  : "invisible -translate-y-1 opacity-0 pointer-events-none",
+              ),
         )}
-        hidden={!isOpen}
       >
-        <div className="container-site py-4">
-          <nav aria-label="Mobile Navigation">
+        <div className="container-site flex min-h-full flex-col py-5">
+          <p className="text-xs font-semibold tracking-[0.12em] text-ink-muted uppercase">
+            Navigation
+          </p>
+
+          <nav aria-label="Mobile Navigation" className="mt-3">
             <ol className="border-t border-line">
               {navigation.map((item, index) => {
                 const active = isActivePath(pathname, item.href);
@@ -208,11 +253,12 @@ export function Header() {
                     <Link
                       href={item.href}
                       className={cn(
-                        "grid min-h-12 grid-cols-[auto_1fr_auto] items-center gap-3 py-3.5 text-base font-semibold",
+                        "grid min-h-[3.25rem] grid-cols-[auto_1fr_auto] items-center gap-3 py-3.5",
                         active ? "text-petrol" : "text-ink",
                       )}
                       aria-current={active ? "page" : undefined}
                       onClick={closeMenu}
+                      tabIndex={isOpen ? undefined : -1}
                     >
                       <span
                         className="font-display text-sm text-petrol/40 tabular-nums"
@@ -220,14 +266,16 @@ export function Header() {
                       >
                         {String(index + 1).padStart(2, "0")}
                       </span>
-                      <span>{item.label}</span>
+                      <span className="text-lg font-semibold tracking-wide">
+                        {item.label}
+                      </span>
                       {active ? (
                         <span
                           className="size-1.5 rounded-full bg-terracotta"
                           aria-hidden
                         />
                       ) : (
-                        <span aria-hidden />
+                        <span className="size-1.5" aria-hidden />
                       )}
                     </Link>
                   </li>
@@ -236,26 +284,33 @@ export function Header() {
             </ol>
           </nav>
 
-          <div className="mt-4 grid gap-2">
-            <Button href={cta.primary.href} size="lg" onClick={closeMenu}>
-              {cta.primary.label}
-            </Button>
-            <Button
-              href={cta.secondary.href}
-              variant="secondary"
-              size="lg"
+          <div className="mt-6 space-y-3">
+            <Link
+              href={cta.primary.href}
               onClick={closeMenu}
+              tabIndex={isOpen ? undefined : -1}
+              className="inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-[0.25rem_0.75rem_0.25rem_0.75rem] bg-terracotta px-5 text-base font-semibold text-on-brand transition-colors hover:bg-[#a55c41]"
+            >
+              {cta.primary.label}
+              <ArrowUpRight className="size-4" aria-hidden />
+            </Link>
+            <Link
+              href={cta.secondary.href}
+              onClick={closeMenu}
+              tabIndex={isOpen ? undefined : -1}
+              className="inline-flex min-h-11 w-full items-center justify-center text-sm font-semibold text-petrol underline-offset-4 hover:underline"
             >
               {cta.secondary.label}
-            </Button>
+            </Link>
           </div>
 
-          <div className="mt-5 border-t border-line pt-4">
+          <div className="mt-8 border-t border-line pt-5">
             <ThemeMenuControl />
-            <p className="mt-3 text-xs leading-relaxed text-ink-muted">
-              {siteConfig.demoNotice}. Alle Angaben sind fiktiv.
-            </p>
           </div>
+
+          <p className="mt-auto pt-8 text-xs leading-relaxed text-ink-muted">
+            Fiktive Website-Demo – alle Angaben sind beispielhaft.
+          </p>
         </div>
       </div>
     </header>

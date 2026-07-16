@@ -34,7 +34,7 @@
   --radius-sm: 0.375rem;
   --radius-md: 0.5rem;
   --shadow-soft: 0 12px 40px rgba(22, 58, 66, 0.08);
-  --header-offset: 3.625rem;
+  --header-offset: 3.5rem;
   --focus-ring: 0 0 0 3px var(--color-cream), 0 0 0 5px var(--color-petrol);
   --theme-transition:
     background-color 160ms ease,
@@ -102,6 +102,14 @@ html[data-theme="dark"] {
   :root {
     --header-offset: 4.5rem;
   }
+}
+
+.site-header {
+  box-shadow: 0 1px 0 color-mix(in srgb, var(--color-line) 35%, transparent);
+}
+
+html[data-theme="dark"] .site-header {
+  box-shadow: 0 1px 0 color-mix(in srgb, var(--color-line) 55%, transparent);
 }
 
 * {
