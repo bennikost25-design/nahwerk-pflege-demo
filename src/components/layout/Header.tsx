@@ -132,11 +132,17 @@ export function Header() {
         )}
       >
         <div className="container-site flex min-h-full flex-col py-5">
-          <p className="text-xs font-semibold tracking-[0.12em] text-ink-muted uppercase">
-            Navigation
-          </p>
+          <div className="shrink-0 pb-3">
+            <p className="text-[0.7rem] font-semibold tracking-[0.1em] text-ink-muted uppercase">
+              Alle Informationen auf einen Blick
+            </p>
+            <p className="mt-1.5 max-w-[22rem] text-[0.85rem] leading-snug text-ink-muted">
+              Hier finden Sie unsere Leistungen, Stellenangebote und
+              Kontaktmöglichkeiten.
+            </p>
+          </div>
 
-          <nav aria-label="Mobile Navigation" className="mt-3 shrink-0">
+          <nav aria-label="Mobile Navigation" className="shrink-0">
             <ul className="border-t border-line">
               {navigation.map((item) => {
                 const active = isActivePath(pathname, item.href);
@@ -280,20 +286,23 @@ export function Header() {
               <button
                 ref={buttonRef}
                 type="button"
-                className="inline-flex size-10 shrink-0 items-center justify-center rounded-[var(--radius-sm)] text-petrol transition-colors hover:bg-surface lg:hidden"
+                className="inline-flex h-10 shrink-0 items-center gap-1 rounded-[var(--radius-sm)] px-1.5 text-petrol transition-colors hover:bg-surface min-[360px]:gap-1.5 min-[360px]:px-2 lg:hidden"
                 aria-expanded={isOpen}
                 aria-controls={menuId}
-                aria-label={isOpen ? "Menü schließen" : "Menü öffnen"}
+                aria-label={isOpen ? "Schließen" : "Übersicht"}
                 onClick={() => {
                   if (isOpen) closeMenu();
                   else openMenu();
                 }}
               >
                 {isOpen ? (
-                  <X className="size-5" aria-hidden />
+                  <X className="size-4 shrink-0" aria-hidden />
                 ) : (
-                  <Menu className="size-5" aria-hidden />
+                  <Menu className="size-4 shrink-0" aria-hidden />
                 )}
+                <span className="hidden text-[0.8125rem] font-semibold tracking-wide min-[360px]:inline">
+                  {isOpen ? "Schließen" : "Übersicht"}
+                </span>
               </button>
             </div>
 
