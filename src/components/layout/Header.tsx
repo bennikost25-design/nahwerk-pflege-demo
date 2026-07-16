@@ -14,10 +14,26 @@ import {
   useId,
   useRef,
   useState,
+  useSyncExternalStore,
 } from "react";
+import { createPortal } from "react-dom";
 
 function isActivePath(pathname: string, href: string) {
   return href === "/" ? pathname === "/" : pathname.startsWith(href);
+}
+
+function mobilePageLabel(pathname: string): string {
+  if (pathname === "/") return "Startseite";
+  if (pathname.startsWith("/leistungen")) return "Leistungen";
+  if (pathname.startsWith("/karriere")) return "Karriere";
+  if (pathname.startsWith("/kontakt")) return "Kontakt";
+  if (pathname.startsWith("/impressum")) return "Impressum";
+  if (pathname.startsWith("/datenschutz")) return "Datenschutz";
+  return "Seite";
+}
+
+function subscribeToNothing() {
+  return () => {};
 }
 
 export function Header() {
@@ -25,10 +41,16 @@ export function Header() {
   const [open, setOpen] = useState(false);
   const [openedOnPath, setOpenedOnPath] = useState(pathname);
   const [reduceMotion, setReduceMotion] = useState(false);
+  const portalReady = useSyncExternalStore(
+    subscribeToNothing,
+    () => true,
+    () => false,
+  );
   const menuId = useId();
   const buttonRef = useRef<HTMLButtonElement>(null);
   const panelRef = useRef<HTMLDivElement>(null);
   const isOpen = open && openedOnPath === pathname;
+  const currentPage = mobilePageLabel(pathname);
 
   const closeMenu = useCallback(() => {
     setOpen(false);
@@ -94,128 +116,9 @@ export function Header() {
     };
   }, [isOpen]);
 
-  return (
-    <header className="site-header sticky top-0 z-50 bg-cream/85 backdrop-blur-md">
-      <div className="container-site relative flex h-14 items-center gap-2 lg:h-[4.5rem] lg:gap-6 xl:gap-10">
-        {/* Marke */}
-        <Link
-          href="/"
-          className="flex min-w-0 flex-1 items-center gap-2 py-1 lg:flex-none lg:gap-2.5"
-          aria-label={`${siteConfig.name} – Startseite`}
-        >
-          <BrandMark className="size-[1.65rem] shrink-0 text-petrol lg:size-8" />
-          <span className="min-w-0">
-            <span className="flex items-baseline gap-1.5">
-              <span className="block truncate font-display text-[1.02rem] leading-none text-petrol lg:text-[1.28rem]">
-                {siteConfig.name}
-              </span>
-              <span
-                className="relative -top-1 hidden text-[0.62rem] font-semibold tracking-wide text-terracotta/80 uppercase lg:inline"
-                title={siteConfig.demoNotice}
-              >
-                Demo
-              </span>
-            </span>
-            <span className="mt-1 hidden text-[0.72rem] leading-tight text-ink-muted lg:block">
-              {siteConfig.tagline}
-              <span className="text-ink-muted/70"> · Fiktive Demo</span>
-            </span>
-          </span>
-        </Link>
-
-        {/* Desktop-Navigation */}
-        <nav
-          className="hidden min-w-0 flex-1 justify-center lg:flex"
-          aria-label="Hauptnavigation"
-        >
-          <ul className="flex items-center gap-0.5 xl:gap-1.5">
-            {navigation.map((item, index) => {
-              const active = isActivePath(pathname, item.href);
-              return (
-                <li key={item.href}>
-                  <Link
-                    href={item.href}
-                    className={cn(
-                      "group relative inline-flex min-h-11 items-baseline gap-1.5 px-2.5 py-2 transition-colors xl:px-3",
-                      active ? "text-petrol" : "text-ink-muted hover:text-petrol",
-                    )}
-                    aria-current={active ? "page" : undefined}
-                  >
-                    <span
-                      className="font-display text-[0.65rem] tabular-nums text-petrol/35"
-                      aria-hidden
-                    >
-                      {String(index + 1).padStart(2, "0")}
-                    </span>
-                    <span className="text-sm font-medium tracking-wide">
-                      {item.label}
-                    </span>
-                    <span
-                      className={cn(
-                        "absolute inset-x-2.5 -bottom-0.5 h-px origin-left bg-terracotta transition-[transform,opacity] duration-200 xl:inset-x-3",
-                        active
-                          ? "scale-x-100 opacity-100"
-                          : "scale-x-0 opacity-0 group-hover:scale-x-100 group-hover:opacity-70",
-                      )}
-                      aria-hidden
-                    />
-                  </Link>
-                </li>
-              );
-            })}
-          </ul>
-        </nav>
-
-        {/* Rechts: Theme + CTA / Menü */}
-        <div className="flex shrink-0 items-center gap-1.5 sm:gap-2">
-          <ThemeToggle className="hidden lg:inline-flex" />
-          <ThemeToggle variant="cycle" className="lg:hidden" />
-
-          <Link
-            href={cta.primary.href}
-            className="group hidden items-center gap-1.5 rounded-[0.2rem_0.65rem_0.2rem_0.65rem] bg-terracotta px-3.5 py-2 text-sm font-semibold tracking-wide text-on-brand transition-colors hover:bg-[#a55c41] lg:inline-flex"
-          >
-            {cta.primary.shortLabel}
-            <ArrowUpRight
-              className="size-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
-              aria-hidden
-            />
-          </Link>
-
-          <button
-            ref={buttonRef}
-            type="button"
-            className="inline-flex size-10 shrink-0 items-center justify-center rounded-[var(--radius-sm)] text-petrol transition-colors hover:bg-surface lg:hidden"
-            aria-expanded={isOpen}
-            aria-controls={menuId}
-            aria-label={isOpen ? "Menü schließen" : "Menü öffnen"}
-            onClick={() => {
-              if (isOpen) closeMenu();
-              else openMenu();
-            }}
-          >
-            {isOpen ? (
-              <X className="size-5" aria-hidden />
-            ) : (
-              <Menu className="size-5" aria-hidden />
-            )}
-          </button>
-        </div>
-
-        {/* Kurze Akzentlinie unter dem Markenbereich – kein Vollkasten */}
-        <span
-          className="pointer-events-none absolute bottom-0 left-0 hidden h-0.5 w-14 bg-terracotta/70 lg:block"
-          aria-hidden
-        />
-      </div>
-
-      {/* Feine Trennlinie – nicht kantenhart über volle Breite */}
-      <div
-        className="pointer-events-none mx-auto h-px w-[min(1120px,calc(100%-2rem))] bg-gradient-to-r from-transparent via-line/70 to-transparent"
-        aria-hidden
-      />
-
-      {/* Mobile Viewport-Panel */}
+  const mobileMenu =
+    portalReady &&
+    createPortal(
       <div
         ref={panelRef}
         id={menuId}
@@ -225,12 +128,12 @@ export function Header() {
         aria-hidden={!isOpen}
         inert={!isOpen ? true : undefined}
         className={cn(
-          "fixed inset-x-0 top-[var(--header-offset)] bottom-0 z-50 overflow-y-auto overscroll-contain bg-cream lg:hidden",
+          "fixed inset-x-0 top-[var(--header-offset)] bottom-0 z-[60] w-full overflow-y-auto overscroll-contain bg-cream lg:hidden",
           "pb-[max(1.25rem,env(safe-area-inset-bottom))]",
           reduceMotion
             ? isOpen
               ? "visible opacity-100"
-              : "invisible opacity-0"
+              : "invisible opacity-0 pointer-events-none"
             : cn(
                 "transition-[opacity,transform] duration-[200ms] ease-out",
                 isOpen
@@ -244,47 +147,37 @@ export function Header() {
             Navigation
           </p>
 
-          <nav aria-label="Mobile Navigation" className="mt-3">
-            <ol className="border-t border-line">
-              {navigation.map((item, index) => {
+          <nav aria-label="Mobile Navigation" className="mt-3 shrink-0">
+            <ul className="border-t border-line">
+              {navigation.map((item) => {
                 const active = isActivePath(pathname, item.href);
                 return (
                   <li key={item.href} className="border-b border-line">
                     <Link
                       href={item.href}
                       className={cn(
-                        "grid min-h-[3.25rem] grid-cols-[auto_1fr_auto] items-center gap-3 py-3.5",
+                        "flex min-h-14 w-full items-center justify-between gap-3 py-3.5 text-lg font-semibold tracking-wide",
                         active ? "text-petrol" : "text-ink",
                       )}
                       aria-current={active ? "page" : undefined}
                       onClick={closeMenu}
                       tabIndex={isOpen ? undefined : -1}
                     >
-                      <span
-                        className="font-display text-sm text-petrol/40 tabular-nums"
-                        aria-hidden
-                      >
-                        {String(index + 1).padStart(2, "0")}
-                      </span>
-                      <span className="text-lg font-semibold tracking-wide">
-                        {item.label}
-                      </span>
+                      <span>{item.label}</span>
                       {active ? (
                         <span
-                          className="size-1.5 rounded-full bg-terracotta"
+                          className="size-1.5 shrink-0 rounded-full bg-terracotta"
                           aria-hidden
                         />
-                      ) : (
-                        <span className="size-1.5" aria-hidden />
-                      )}
+                      ) : null}
                     </Link>
                   </li>
                 );
               })}
-            </ol>
+            </ul>
           </nav>
 
-          <div className="mt-6 space-y-3">
+          <div className="mt-6 shrink-0 space-y-3">
             <Link
               href={cta.primary.href}
               onClick={closeMenu}
@@ -304,15 +197,139 @@ export function Header() {
             </Link>
           </div>
 
-          <div className="mt-8 border-t border-line pt-5">
+          <div className="mt-8 shrink-0 border-t border-line pt-5">
             <ThemeMenuControl />
           </div>
 
-          <p className="mt-auto pt-8 text-xs leading-relaxed text-ink-muted">
+          <p className="mt-auto shrink-0 pt-8 text-xs leading-relaxed text-ink-muted">
             Fiktive Website-Demo – alle Angaben sind beispielhaft.
           </p>
         </div>
-      </div>
-    </header>
+      </div>,
+      document.body,
+    );
+
+  return (
+    <>
+      <header className="sticky top-0 z-50">
+        {/* Blur nur auf dem sichtbaren Balken – nicht als Ancestor des Fixed-Panels */}
+        <div className="site-header bg-cream/85 backdrop-blur-md">
+          <div className="container-site relative flex h-[3.75rem] items-center gap-1.5 sm:gap-2 lg:h-[4.5rem] lg:gap-6 xl:gap-10">
+            <Link
+              href="/"
+              className="flex min-w-0 flex-1 items-center gap-2 py-1 lg:flex-none lg:gap-2.5"
+              aria-label={`${siteConfig.name} – Startseite`}
+            >
+              <BrandMark className="size-[1.7rem] shrink-0 text-petrol lg:size-8" />
+              <span className="min-w-0">
+                <span className="flex items-baseline gap-1.5">
+                  <span className="whitespace-nowrap font-display text-[0.98rem] leading-[1.2] text-petrol lg:text-[1.28rem] lg:leading-[1.2]">
+                    {siteConfig.name}
+                  </span>
+                  <span
+                    className="relative -top-0.5 hidden text-[0.62rem] font-semibold tracking-wide text-terracotta/80 uppercase lg:inline"
+                    title={siteConfig.demoNotice}
+                  >
+                    Demo
+                  </span>
+                </span>
+                {/* Mobile: aktuelle Seite */}
+                <span className="mt-0.5 block text-[0.68rem] leading-tight text-ink-muted lg:hidden">
+                  {currentPage}
+                </span>
+                {/* Desktop: Tagline */}
+                <span className="mt-0.5 hidden text-[0.72rem] leading-tight text-ink-muted lg:block">
+                  {siteConfig.tagline}
+                  <span className="text-ink-muted/70"> · Fiktive Demo</span>
+                </span>
+              </span>
+            </Link>
+
+            <nav
+              className="hidden min-w-0 flex-1 justify-center lg:flex"
+              aria-label="Hauptnavigation"
+            >
+              <ul className="flex items-center gap-1 xl:gap-2">
+                {navigation.map((item) => {
+                  const active = isActivePath(pathname, item.href);
+                  return (
+                    <li key={item.href}>
+                      <Link
+                        href={item.href}
+                        className={cn(
+                          "group relative inline-flex min-h-11 items-center px-3 py-2 text-sm font-medium tracking-wide transition-colors xl:px-3.5",
+                          active
+                            ? "text-petrol"
+                            : "text-ink-muted hover:text-petrol",
+                        )}
+                        aria-current={active ? "page" : undefined}
+                      >
+                        {item.label}
+                        <span
+                          className={cn(
+                            "absolute inset-x-3 -bottom-0.5 h-px origin-left bg-terracotta transition-[transform,opacity] duration-200 xl:inset-x-3.5",
+                            active
+                              ? "scale-x-100 opacity-100"
+                              : "scale-x-0 opacity-0 group-hover:scale-x-100 group-hover:opacity-70",
+                          )}
+                          aria-hidden
+                        />
+                      </Link>
+                    </li>
+                  );
+                })}
+              </ul>
+            </nav>
+
+            <div className="flex shrink-0 items-center gap-1 sm:gap-1.5 lg:gap-2">
+              <ThemeToggle className="hidden lg:inline-flex" />
+              <ThemeToggle variant="cycle" className="!size-9 lg:hidden" />
+
+              <Link
+                href={cta.primary.href}
+                className="group hidden items-center gap-1.5 rounded-[0.2rem_0.65rem_0.2rem_0.65rem] bg-terracotta px-3.5 py-2 text-sm font-semibold tracking-wide text-on-brand transition-colors hover:bg-[#a55c41] lg:inline-flex"
+              >
+                {cta.primary.shortLabel}
+                <ArrowUpRight
+                  className="size-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+                  aria-hidden
+                />
+              </Link>
+
+              <button
+                ref={buttonRef}
+                type="button"
+                className="inline-flex size-10 shrink-0 items-center justify-center rounded-[var(--radius-sm)] text-petrol transition-colors hover:bg-surface lg:hidden"
+                aria-expanded={isOpen}
+                aria-controls={menuId}
+                aria-label={isOpen ? "Menü schließen" : "Menü öffnen"}
+                onClick={() => {
+                  if (isOpen) closeMenu();
+                  else openMenu();
+                }}
+              >
+                {isOpen ? (
+                  <X className="size-5" aria-hidden />
+                ) : (
+                  <Menu className="size-5" aria-hidden />
+                )}
+              </button>
+            </div>
+
+            <span
+              className="pointer-events-none absolute bottom-0 left-0 hidden h-0.5 w-14 bg-terracotta/70 lg:block"
+              aria-hidden
+            />
+          </div>
+
+          <div
+            className="pointer-events-none mx-auto h-px w-[min(1120px,calc(100%-2rem))] bg-gradient-to-r from-transparent via-line/70 to-transparent"
+            aria-hidden
+          />
+        </div>
+      </header>
+
+      {mobileMenu}
+    </>
   );
 }
