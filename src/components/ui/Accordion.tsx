@@ -12,11 +12,16 @@ export type FaqItem = {
 type AccordionProps = {
   items: ReadonlyArray<FaqItem>;
   className?: string;
+  defaultOpenIndex?: number | null;
 };
 
-export function Accordion({ items, className }: AccordionProps) {
+export function Accordion({
+  items,
+  className,
+  defaultOpenIndex = 0,
+}: AccordionProps) {
   const baseId = useId();
-  const [openIndex, setOpenIndex] = useState<number | null>(0);
+  const [openIndex, setOpenIndex] = useState<number | null>(defaultOpenIndex);
 
   return (
     <div className={cn("divide-y divide-line border-y border-line", className)}>

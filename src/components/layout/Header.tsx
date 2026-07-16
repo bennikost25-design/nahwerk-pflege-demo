@@ -286,7 +286,7 @@ export function Header() {
               <button
                 ref={buttonRef}
                 type="button"
-                className="inline-flex size-10 shrink-0 items-center justify-center rounded-[var(--radius-sm)] border border-line/70 bg-surface/50 text-petrol transition-colors hover:bg-surface lg:hidden"
+                className="inline-flex size-10 shrink-0 items-center justify-center rounded-[var(--radius-sm)] text-petrol transition-colors hover:bg-surface lg:hidden"
                 aria-expanded={isOpen}
                 aria-controls={menuId}
                 aria-label={isOpen ? "Übersicht schließen" : "Übersicht öffnen"}

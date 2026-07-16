@@ -234,6 +234,7 @@ export default function LeistungenPage() {
         title={copy.faq.title}
         description={copy.faq.description}
         tone="cream"
+        defaultOpenIndex={null}
       />
 
       <ContactCta

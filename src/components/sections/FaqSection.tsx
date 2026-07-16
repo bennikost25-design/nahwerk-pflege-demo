@@ -9,6 +9,7 @@ type FaqSectionProps = {
   tone?: "cream" | "surface";
   /** Zweispalten-Layout für die Startseite; Standard bleibt für Unterseiten */
   layout?: "stack" | "split";
+  defaultOpenIndex?: number | null;
 };
 
 export function FaqSection({
@@ -18,6 +19,7 @@ export function FaqSection({
   eyebrow,
   tone = "cream",
   layout = "stack",
+  defaultOpenIndex,
 }: FaqSectionProps) {
   if (layout === "split") {
     return (
@@ -38,7 +40,7 @@ export function FaqSection({
               </p>
             ) : null}
           </header>
-          <Accordion items={items} />
+          <Accordion items={items} defaultOpenIndex={defaultOpenIndex} />
         </div>
       </Section>
     );
@@ -48,7 +50,7 @@ export function FaqSection({
     <Section tone={tone}>
       <SectionHeader title={title} description={description} eyebrow={eyebrow} />
       <div className="mt-8 max-w-3xl">
-        <Accordion items={items} />
+        <Accordion items={items} defaultOpenIndex={defaultOpenIndex} />
       </div>
     </Section>
   );
