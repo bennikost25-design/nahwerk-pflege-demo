@@ -44,20 +44,10 @@ export default function KarrierePage() {
               {copy.hero.description}
             </p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
-              <Button
-                href="#bewerbung"
-                variant="terracotta"
-                size="lg"
-                className="text-on-brand hover:text-on-brand"
-              >
+              <Button href="#bewerbung" variant="terracotta" size="lg">
                 In 60 Sekunden bewerben
               </Button>
-              <Button
-                href="#stellen"
-                variant="secondary"
-                size="lg"
-                className="border-on-brand/35 text-on-brand hover:border-on-brand hover:bg-on-brand/10"
-              >
+              <Button href="#stellen" variant="secondaryOnBrand" size="lg">
                 Offene Stellen ansehen
               </Button>
             </div>

@@ -5,7 +5,7 @@ import type { ComponentPropsWithoutRef, ReactNode } from "react";
 type CommonProps = {
   children: ReactNode;
   className?: string;
-  variant?: "primary" | "secondary" | "ghost" | "terracotta";
+  variant?: "primary" | "secondary" | "secondaryOnBrand" | "ghost" | "terracotta";
   size?: "md" | "lg";
 };
 
@@ -23,6 +23,8 @@ const variants: Record<NonNullable<CommonProps["variant"]>, string> = {
     "bg-brand text-on-brand hover:bg-brand-deep border border-transparent",
   secondary:
     "bg-transparent text-petrol border border-petrol/30 hover:border-petrol hover:bg-elevated/70",
+  secondaryOnBrand:
+    "bg-transparent text-on-brand border border-on-brand/35 hover:border-on-brand hover:bg-on-brand/10 hover:text-on-brand",
   ghost:
     "bg-transparent text-petrol border border-transparent hover:bg-cream-deep",
   terracotta:

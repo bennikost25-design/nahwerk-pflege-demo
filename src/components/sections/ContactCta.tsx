@@ -125,9 +125,9 @@ export function ContactCta({
                 </Button>
                 <Button
                   href={secondaryHref}
-                  variant="secondary"
+                  variant="secondaryOnBrand"
                   size="lg"
-                  className="w-full border-on-brand/35 text-on-brand hover:border-on-brand hover:bg-on-brand/10 sm:w-auto"
+                  className="w-full sm:w-auto"
                 >
                   {secondaryLabel}
                 </Button>

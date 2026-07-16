@@ -28,9 +28,8 @@ export function CareerTeaser() {
             </Button>
             <Button
               href="/karriere#stellen"
-              variant="secondary"
+              variant="secondaryOnBrand"
               size="lg"
-              className="border-on-brand/35 text-on-brand hover:border-on-brand hover:bg-on-brand/10"
             >
               Offene Stellen ansehen
             </Button>
